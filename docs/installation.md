@@ -24,17 +24,15 @@ sudo apt-get update
 sudo apt-get install git
 ```
 
-Clone the private repository using an authenticated, least-privilege GitHub identity.
-Check out the reviewed release tag or full commit, verify it, and install from the
-component directory:
+Clone the public component repository. Check out the reviewed release tag or full
+commit, verify it, and install from the repository root:
 
 ```bash
-git clone git@github.com:moodywaters/pitblu.git
-cd pitblu
+git clone https://github.com/pitblu-project/pitblu-core.git
+cd pitblu-core
 git checkout --detach REPLACE_WITH_REVIEWED_TAG_OR_FULL_COMMIT
 git rev-parse HEAD
 git status --short
-cd pitblu-core
 ./pitblu-core-install
 ```
 

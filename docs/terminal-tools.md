@@ -25,8 +25,8 @@ Pi/iGrill and soak gates remain listed in [physical acceptance](physical-accepta
 Clone the reviewed GitHub revision, enter the component directory and start the guided installer:
 
 ```bash
-git clone git@github.com:moodywaters/pitblu.git
-cd pitblu/pitblu-core
+git clone https://github.com/pitblu-project/pitblu-core.git
+cd pitblu-core
 ./pitblu-core-install
 ```
 
