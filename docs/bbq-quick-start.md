@@ -80,7 +80,7 @@ investigate. Tell them when it stopped and what the iGrill display shows, but do
 not send passwords, access tokens or unreviewed logs.
 
 There are no built-in alerts, cooking targets or temperature-history graphs.
-The minimum 16-hour physical reliability test is still a v1.0.0 release requirement,
+The minimum four-hour physical reliability test is still a v1.0.0 release requirement,
 not a completed guarantee for overnight cooks. Keep independent temperature checks.
 
 ## After the cook
