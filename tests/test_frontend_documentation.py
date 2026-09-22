@@ -12,7 +12,7 @@ from pitblu_core.storage import AdministrativeStore
 
 
 def test_frontend_guide_covers_routes_settings_and_events() -> None:
-    guide = (Path(__file__).parents[2] / "docs" / "frontend-integration.md").read_text(
+    guide = (Path(__file__).parents[1] / "docs" / "frontend-integration.md").read_text(
         encoding="utf-8"
     )
     normalised = re.sub(r"\{[^{}\n]+\}", "{parameter}", guide)
