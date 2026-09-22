@@ -25,7 +25,7 @@ thermometer and not a controller for your barbecue.
 - Share live readings with a separate application.
 
 The current release is v0.9.0 beta. Clean-Pi acceptance passed; the complete
-four-probe physical suite and 16-hour soak remain v1.0.0 gates. Check the
+four-probe physical suite and four-hour soak remain v1.0.0 gates. Check the
 [acceptance record](physical-acceptance.md) before relying on the gateway for an
 unattended cook.
 

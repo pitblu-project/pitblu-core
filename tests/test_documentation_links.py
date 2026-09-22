@@ -6,12 +6,10 @@ from urllib.parse import unquote, urlsplit
 
 
 def test_documentation_local_file_links_exist() -> None:
-    root = Path(__file__).parents[2]
+    root = Path(__file__).parents[1]
     documents = [
         *root.glob("*.md"),
         *(root / "docs").rglob("*.md"),
-        *(root / "pitblu-core").glob("*.md"),
-        *(root / "pitblu-app").glob("*.md"),
     ]
     for document in documents:
         content = document.read_text(encoding="utf-8")

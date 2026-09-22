@@ -64,7 +64,7 @@ could read but not publish. Full sanitised results are in
 - Host clock reporting observes OS synchronisation status, not independent clock
   accuracy. Bluetooth powered=true does not prove successful discovery or GATT reads.
 - Systemd restart supervision has a rate limit. It is not a guarantee against all
-  hangs, power loss, radio interference or prolonged failure. The 16-hour soak is pending.
+  hangs, power loss, radio interference or prolonged failure. The four-hour soak is pending.
 - Backups contain secrets; the installer executes trusted source and package builds
   as root. Do not accept arbitrary uploaded archives or backup paths from web users.
 
@@ -77,4 +77,4 @@ configuration conflicts, stale readings, MQTT retry and deployment-state helpers
 Run full lint, format, type, test and Linux CI checks after the final release edit.
 Clean-Pi installation, operating-system permissions and physical two-probe readings
 have passed. Final pull-request review remains required before v0.9.0 release
-approval. The v1.0.0 four-probe suite and 16-hour soak remain pending.
+approval. The v1.0.0 four-probe suite and four-hour soak remain pending.

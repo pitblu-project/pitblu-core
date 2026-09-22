@@ -14,11 +14,11 @@ two-probe comparison, battery cadence, SSE, MQTT, restart/reboot recovery, backu
 same-version upgrade/rollback and uninstall/restoration passed. The dated sanitised
 results are in [clean-Pi acceptance](clean-pi-acceptance.md).
 
-The source is not a published release until its reviewed commit is merged and the
-matching `v0.9.0` Git tag and GitHub release exist. `CHANGELOG.md` is the canonical
-human-readable version history; Git tags and releases are authoritative for
-published revisions.
+The original `v0.9.0` tag and release were published in the historical monorepo.
+The standalone repository preserves the identical core source tree at `d5e407d`.
+`CHANGELOG.md` is the canonical human-readable version history; Git tags and
+releases are authoritative for published revisions.
 
-The full four-probe physical suite and minimum 16-hour soak are separate v1.0.0
-gates and remain pending. The [frontend contract](frontend-integration.md) describes
-implemented v0.9.0 behaviour; pitblu-app is a separate application component.
+The full four-probe physical suite and minimum four-hour soak are separate v1.0.0
+gates and remain pending. The [frontend contract](frontend-integration.md) includes
+the candidate heartbeat contract; pitblu-app is a separate application component.

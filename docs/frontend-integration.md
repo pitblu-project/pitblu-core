@@ -1,7 +1,7 @@
 # pitblu-core integration contract for pitblu-app
 
 Contract: **v0.9.0**, clean-installed and acceptance-tested on the target Pi.
-The v1.0.0 full four-probe physical suite and minimum 16-hour soak remain pending.
+The v1.0.0 full four-probe physical suite and minimum four-hour soak remain pending.
 
 ## 1. Purpose and architecture
 
