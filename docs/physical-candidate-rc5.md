@@ -24,9 +24,8 @@ Disconnect → ordinary Connect retest of the sequence that failed on rc4.
 
 The longer connection deadline and cached-candidate invalidation are both
 present in rc5; the physical result does not isolate which change mattered.
-Connected-but-unresponsive ageing, MQTT/Last Will, four-inserted-probe
-display comparison and four-hour monitored soak remain pending on this
-candidate.
+Connected-but-unresponsive ageing, four-inserted-probe display comparison and
+four-hour monitored soak remain pending on this candidate.
 
 The operator then powered the thermometer off while leaving the Pi and service
 running. After at least 20 seconds, the authenticated support check showed
@@ -89,3 +88,47 @@ battery. This passes a targeted successful force reconnect while in backoff.
 A support check after at least one further minute still reported observed
 polling, communication one second earlier, four fresh channel responses and
 fresh 40% battery.
+
+The local Mosquitto broker was active and rejected an unauthenticated
+subscriber, as expected for an authenticated broker. Its configuration had
+both a password file and ACL file; the ACL had three user entries and two
+read rules. The operator used saved credentials through the guided MQTT tool.
+An initial configuration with the wrong account entered MQTT backoff; after
+correcting it to the existing `pitblu-publisher` account and entering its
+password at the hidden prompt, the guided restart reported MQTT connected.
+The authenticated support check then confirmed MQTT connected, readiness and
+physical thermometer polling with recent communication and fresh 40% battery.
+
+A separate subscriber connected using credentials entered only at hidden
+prompts and received granted QoS 1 subscriptions for service availability
+and device heartbeat. Both messages were retained, delivered at QoS 1 and
+sourced from `physical`. Service availability was true, device heartbeat was
+healthy, and both shared the same publisher session identifier. No subscriber
+credential or secret was included in the test output or this record. This
+passes the retained MQTT availability/heartbeat representation check, but
+does not yet prove live temperature delivery or Last Will behaviour.
+
+The separate subscriber then received a granted QoS 1 subscription to live
+probe-temperature topics. A probe 1 message reported 20.0°C, source
+`physical`, QoS 1 and `retained: false`, in the same publisher session as
+the retained availability and heartbeat observations. This passes the live
+MQTT temperature-delivery check. Last Will was tested next.
+
+With no active cook, the operator ran a separate authenticated subscriber for
+retained service availability, then sent SIGKILL only to the `pitblu-core`
+service main process with `systemctl kill --kill-who=main`. The service was
+configured `Restart=on-failure` with a five-second restart delay. The
+subscriber observed `available=true` retained at QoS 1 in session
+`b69a41d01aaa4d7396ab04401cdd4798`, then a live QoS 1
+`available=false` publication from that same session (the broker Last Will),
+then live QoS 1 `available=true` in new session
+`9201688ee13e427dbb387c22b8b6ca9b`. This passes the MQTT Last Will and
+publisher-session transition check. The observer subsequently raised a
+`UnicodeEncodeError` solely while printing a non-ASCII completion message;
+all three broker messages had already been received and printed. The
+post-restart authenticated support check passed: service active, local API
+healthy, readiness ready, runtime `1.0.0rc5` status okay, MQTT connected,
+physical iGrill polling with communication two seconds earlier, four fresh
+channel responses and fresh 40% battery. This completes the targeted
+service-failure/Last Will/recovery check; it does not substitute for the
+four-hour soak or four-inserted-probe comparison.
