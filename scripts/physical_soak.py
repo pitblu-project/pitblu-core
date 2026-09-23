@@ -101,11 +101,17 @@ async def monitor_rest(
     client: ApiClient, path: str, evidence: Evidence, deadline: float, counts: dict[str, Any]
 ) -> None:
     next_report = time.monotonic() + 60
+    last_session: str | None = None
     while time.monotonic() < deadline:
         try:
             snapshot = await asyncio.to_thread(read_rest, client, path)
             evidence.write("rest", **snapshot)
             counts["restSamples"] += 1
+            if last_session is not None and snapshot["sessionId"] != last_session:
+                counts["sessionChanges"] += 1
+                evidence.write("sessionChange", old=last_session, new=snapshot["sessionId"])
+                print(f"Service session changed at {utc_now()}", flush=True)
+            last_session = snapshot["sessionId"]
             if not snapshot["good"]:
                 counts["restBad"] += 1
                 print(f"REST gap at {utc_now()}: inspect evidence log", flush=True)
@@ -113,6 +119,15 @@ async def monitor_rest(
             evidence.write("restError", errorType=type(exc).__name__)
             counts["restBad"] += 1
             print(f"REST error at {utc_now()}: {type(exc).__name__}", flush=True)
+        now = time.monotonic()
+        for probe in range(1, 5):
+            gap = now - counts["_lastMqttAt"][probe]
+            counts["maxMqttGapSeconds"] = max(counts["maxMqttGapSeconds"], round(gap, 1))
+            if gap > MQTT_GAP_SECONDS and not counts["_mqttSilent"][probe]:
+                counts["mqttGaps"] += 1
+                counts["_mqttSilent"][probe] = True
+                evidence.write("mqttGap", probe=probe, seconds=round(gap, 1))
+                print(f"MQTT probe {probe} silent for {gap:.1f}s", flush=True)
         if time.monotonic() >= next_report:
             print(
                 f"{utc_now()} elapsed="
@@ -133,7 +148,6 @@ async def monitor_mqtt(
     deadline: float,
     counts: dict[str, Any],
 ) -> None:
-    last_temperature: dict[int, float] = {}
     while time.monotonic() < deadline:
         try:
             async with aiomqtt.Client(
@@ -162,16 +176,16 @@ async def monitor_mqtt(
                         if name.endswith("/temperature"):
                             probe = int(payload["probe"])
                             now = time.monotonic()
-                            if probe in last_temperature:
-                                gap = now - last_temperature[probe]
-                                counts["maxMqttGapSeconds"] = max(
-                                    counts["maxMqttGapSeconds"], round(gap, 1)
-                                )
-                                if gap > MQTT_GAP_SECONDS:
-                                    counts["mqttGaps"] += 1
-                                    evidence.write("mqttGap", probe=probe, seconds=round(gap, 1))
-                                    print(f"MQTT probe {probe} gap {gap:.1f}s", flush=True)
-                            last_temperature[probe] = now
+                            gap = now - counts["_lastMqttAt"][probe]
+                            counts["maxMqttGapSeconds"] = max(
+                                counts["maxMqttGapSeconds"], round(gap, 1)
+                            )
+                            if gap > MQTT_GAP_SECONDS and not counts["_mqttSilent"][probe]:
+                                counts["mqttGaps"] += 1
+                                evidence.write("mqttGap", probe=probe, seconds=round(gap, 1))
+                                print(f"MQTT probe {probe} gap {gap:.1f}s", flush=True)
+                            counts["_lastMqttAt"][probe] = now
+                            counts["_mqttSilent"][probe] = False
                             counts["mqttTemperature"] += 1
                             counts["mqttByProbe"][probe] += 1
                             record["probe"] = probe
@@ -219,16 +233,19 @@ async def main() -> None:
     except aiomqtt.MqttError as exc:
         raise SystemExit(f"MQTT subscriber preflight failed: {type(exc).__name__}") from None
     evidence = Evidence()
+    start = time.monotonic()
     counts: dict[str, Any] = {
         "restSamples": 0,
         "restBad": 0,
+        "sessionChanges": 0,
         "mqttTemperature": 0,
         "mqttByProbe": {1: 0, 2: 0, 3: 0, 4: 0},
         "mqttGaps": 0,
         "maxMqttGapSeconds": 0.0,
         "mqttBad": 0,
+        "_lastMqttAt": {probe: start for probe in range(1, 5)},
+        "_mqttSilent": {probe: False for probe in range(1, 5)},
     }
-    start = time.monotonic()
     deadline = start + DURATION_SECONDS
     evidence.write(
         "start",
@@ -255,13 +272,15 @@ async def main() -> None:
         review = (
             elapsed < DURATION_SECONDS
             or counts["restBad"] > 0
+            or counts["sessionChanges"] > 0
             or counts["mqttBad"] > 0
             or counts["mqttGaps"] > 0
             or any(n == 0 for n in counts["mqttByProbe"].values())
         )
-        evidence.write("summary", elapsedSeconds=elapsed, reviewRequired=review, **counts)
+        summary = {key: value for key, value in counts.items() if not key.startswith("_")}
+        evidence.write("summary", elapsedSeconds=elapsed, reviewRequired=review, **summary)
         evidence.close()
-        print(f"Soak {'REVIEW REQUIRED' if review else 'NO AUTOMATIC GAPS'}: {counts}", flush=True)
+        print(f"Soak {'REVIEW REQUIRED' if review else 'NO AUTOMATIC GAPS'}: {summary}", flush=True)
         print(f"Evidence: {evidence.path}", flush=True)
 
 
