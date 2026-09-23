@@ -86,19 +86,31 @@ def test_scan_cannot_invalidate_recovery_candidate_before_connect() -> None:
 def test_reconnect_resolves_registered_identity_after_old_candidate_expires() -> None:
     class RotatingCandidateAdapter(SimulatedIGrillAdapter):
         scans = 0
+        reconnect_events: list[str]
+
+        def __init__(self) -> None:
+            super().__init__(clock=utc_now)
+            self.reconnect_events = []
 
         async def discover(self, duration: float) -> tuple[DiscoveredDevice, ...]:
             self.scans += 1
+            self.reconnect_events.append("discover")
             return await super().discover(duration)
 
         async def disconnect(self) -> None:
             await super().disconnect()
+            self.reconnect_events.append("disconnect")
             self._candidate = replace(
                 self._candidate, discovery_id=f"candidate-after-disconnect-{self.scans}"
             )
 
+        async def recover_registered(self, identity: str) -> bool:
+            assert identity == "simulated-igrill-v202"
+            self.reconnect_events.append("release")
+            return False
+
     async def exercise() -> None:
-        adapter = RotatingCandidateAdapter(clock=utc_now)
+        adapter = RotatingCandidateAdapter()
         store = AdministrativeStore()
         service = AdministrationService(adapter, store)
         try:
@@ -113,6 +125,7 @@ def test_reconnect_resolves_registered_identity_after_old_candidate_expires() ->
             )
             assert service.operation(str(operation["operationId"]))["status"] == "succeeded"
             assert adapter.scans == 2
+            assert adapter.reconnect_events == ["discover", "disconnect", "release", "discover"]
             assert service.device(device_id)["observedState"] == "polling"
             assert service.diagnostics()["failureType"] is None
         finally:

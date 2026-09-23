@@ -433,6 +433,13 @@ class AdministrationService:
                     await self._stop_polling(device_id)
                     async with self._io_lock:
                         await self.adapter.disconnect()
+                        identity = row.get("identity")
+                        if isinstance(identity, str):
+                            # Bleak may have disconnected its client while BlueZ still
+                            # owns the registered link. Release only that identity
+                            # before resolving a fresh discovery candidate.
+                            stage = "bluez_release"
+                            await self.adapter.recover_registered(identity)
                 # Discovery replaces the adapter's candidate cache. Keep resolution and
                 # connection atomic so background scans cannot invalidate the selection.
                 async with self._io_lock:
