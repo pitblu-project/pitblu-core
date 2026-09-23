@@ -6,7 +6,7 @@ candidate at exact commit `f3bc11488e72b966676c0f3a1844ea218259ab90`.
 This is the release record for the clean-install gate. Repeatable preparation and
 installation instructions live in the [rebuild checklist](rebuild-checklist.md) and
 [installation guide](installation.md). The full four-probe physical suite and
-minimum four-hour soak remain separate v1.0.0 gates.
+minimum twelve-hour soak remain separate v1.0.0 gates.
 
 ## Platform and source
 

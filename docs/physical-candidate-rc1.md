@@ -39,5 +39,5 @@ zero fresh probe readings and no fresh battery reading. No later recovery result
 was supplied for the second attempt. The force-reconnect gate therefore failed.
 
 Restart/session, BLE-loss ageing, broker/Last Will, rollback, four-probe comparison
-and four-hour soak checks remain pending. No result here may be carried forward
+and twelve-hour soak checks remain pending. No result here may be carried forward
 as a pass for a changed candidate without relevant retesting.

@@ -1,4 +1,4 @@
-"""Operator-run four-hour physical soak recorder for the exact installed candidate.
+"""Operator-run twelve-hour physical soak recorder for the exact installed candidate.
 
 Run with the installed pitblu-core virtualenv Python. Credentials are prompted
 interactively and never written to the evidence log.
@@ -19,7 +19,7 @@ import aiomqtt
 
 from pitblu_core.api_client import ApiClient
 
-DURATION_SECONDS = 4 * 60 * 60
+DURATION_SECONDS = 12 * 60 * 60
 POLL_SECONDS = 5
 MQTT_GAP_SECONDS = 30
 
@@ -254,7 +254,7 @@ async def main() -> None:
         sessionId=first["sessionId"],
         deviceId=devices[0]["deviceId"],
     )
-    print(f"Four-hour soak started {utc_now()}; log: {evidence.path}", flush=True)
+    print(f"Twelve-hour soak started {utc_now()}; log: {evidence.path}", flush=True)
     try:
         await asyncio.gather(
             monitor_rest(client, path, evidence, deadline, counts),

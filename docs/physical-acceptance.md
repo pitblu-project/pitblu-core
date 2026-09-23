@@ -27,7 +27,7 @@ one minute. Automatic recovery and the other final release gates remain open.
 
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
-physical suite and minimum four-hour soak are **not complete**.
+physical suite and minimum twelve-hour soak are **not complete**.
 
 ## Clean-Pi v0.9.0 evidence: recorded 10 September 2026
 
@@ -55,7 +55,7 @@ See the [clean-Pi record](clean-pi-acceptance.md) for the sanitised results.
 These are historical operator-supplied results from the earlier existing-OS
 migration. They remain useful evidence but are superseded for the v0.9.0
 clean-install gate by the record above. Neither record constitutes four-inserted-
-probe acceptance, independent penetration testing or a four-hour soak.
+probe acceptance, independent penetration testing or a twelve-hour soak.
 
 ## v0.9.0 audit gates
 
@@ -79,7 +79,7 @@ These remain final-candidate checks even where earlier milestones provide eviden
 - Verify clean native installation, automatic startup, graceful shutdown, upgrade
   and rollback, with migration limitations stated explicitly.
 - Pass supported-Python CI and complete documentation/provenance/licence reviews.
-- Complete at least four hours of physical monitoring without manual intervention;
+- Complete at least twelve hours of physical monitoring without manual intervention;
   record sample freshness, MQTT receipt, telemetry gaps, interruptions and automatic
   recovery. Review every gap; merely leaving the process running is not a pass.
 

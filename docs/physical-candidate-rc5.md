@@ -24,7 +24,7 @@ Disconnect → ordinary Connect retest of the sequence that failed on rc4.
 
 The longer connection deadline and cached-candidate invalidation are both
 present in rc5; the physical result does not isolate which change mattered.
-Connected-but-unresponsive ageing and four-hour monitored soak remain pending
+Connected-but-unresponsive ageing and twelve-hour monitored soak remain pending
 on this candidate. The four-inserted-probe comparison was completed later.
 
 The operator then powered the thermometer off while leaving the Pi and service
@@ -131,7 +131,7 @@ healthy, readiness ready, runtime `1.0.0rc5` status okay, MQTT connected,
 physical iGrill polling with communication two seconds earlier, four fresh
 channel responses and fresh 40% battery. This completes the targeted
 service-failure/Last Will/recovery check; it did not substitute for the
-four-hour soak or four-inserted-probe comparison performed later.
+twelve-hour soak or four-inserted-probe comparison performed later.
 
 The operator then inserted all four probes. Authenticated REST reported a
 healthy fresh physical heartbeat and all four probes present, fresh and

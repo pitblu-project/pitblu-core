@@ -20,6 +20,6 @@ The standalone repository preserves the identical core source tree at `d5e407d`.
 `CHANGELOG.md` is the canonical human-readable version history; Git tags and
 releases are authoritative for published revisions.
 
-The full four-probe physical suite and minimum four-hour soak are separate v1.0.0
+The full four-probe physical suite and minimum twelve-hour soak are separate v1.0.0
 gates and remain pending. The [frontend contract](frontend-integration.md) includes
 the candidate heartbeat contract; pitblu-app is a separate application component.
