@@ -101,6 +101,7 @@ class AdministrationService:
         self.shutdown_timeout = shutdown_timeout
         self.last_error: str | None = None
         self.last_failure_stage: str | None = None
+        self.last_failure_type: str | None = None
 
     async def start(self) -> None:
         self.store.interrupt_operations(utc_now().isoformat())
@@ -411,7 +412,13 @@ class AdministrationService:
                 # connection atomic so background scans cannot invalidate the selection.
                 async with self._io_lock:
                     stage = "discovery"
-                    candidate = self._candidates.get(str(row["discovery_id"]))
+                    # A BLEDevice resolved before disconnect can refer to an obsolete
+                    # BlueZ object. Re-resolve the registered identity for reconnects.
+                    candidate = (
+                        None
+                        if action == "reconnect" and row.get("identity") is not None
+                        else self._candidates.get(str(row["discovery_id"]))
+                    )
                     if candidate is None:
                         candidates = await self.adapter.discover(self.scan_duration)
                         self._candidates = {item.discovery_id: item for item in candidates}
@@ -461,6 +468,7 @@ class AdministrationService:
                 self._connected_device = device_id
                 self.last_error = None
                 self.last_failure_stage = None
+                self.last_failure_type = None
                 self._start_polling(device_id)
                 self.store.update_device(
                     device_id,
@@ -479,9 +487,15 @@ class AdministrationService:
         except Exception as exc:
             self.last_error = "device_operation_failed"
             self.last_failure_stage = stage
+            self.last_failure_type = type(exc).__name__
             logging.getLogger(__name__).warning(
                 json.dumps(
-                    {"event": "device_operation_failed", "deviceId": device_id, "stage": stage}
+                    {
+                        "event": "device_operation_failed",
+                        "deviceId": device_id,
+                        "stage": stage,
+                        "failureType": self.last_failure_type,
+                    }
                 )
             )
             observed = "disconnected" if action == "disconnect" else "backoff"
@@ -641,6 +655,7 @@ class AdministrationService:
             "pendingOperations": len(self._tasks),
             "errorCode": self.last_error,
             "failureStage": self.last_failure_stage,
+            "failureType": self.last_failure_type,
             "discoveryErrorCode": self.discovery_error,
         }
 

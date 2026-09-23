@@ -13,7 +13,7 @@ New adapters require success/failure/no-probe/simulation tests and must document
 in [the heartbeat guide](thermometer-heartbeat.md).
 
 Use an isolated Python 3.11, 3.12 or 3.13 virtual environment. CI runs on all three
-versions. The published release is v0.9.0; the current candidate is v1.0.0rc1.
+versions. The published release is v0.9.0; the current candidate is v1.0.0rc2.
 
 ## Setup and checks
 
