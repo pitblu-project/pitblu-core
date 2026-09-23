@@ -4,7 +4,7 @@
 
 The published release is v0.9.0 beta; the current candidate is v1.0.0rc5. Clean-Pi
 acceptance passed at the exact runtime revision recorded in the acceptance document.
-The v1.0.0 physical suite and minimum four-hour soak are separate pending gates.
+The v1.0.0 physical suite and minimum twelve-hour soak are separate pending gates.
 `CHANGELOG.md` is the canonical human-readable version history; Git tags and
 releases are authoritative once published.
 

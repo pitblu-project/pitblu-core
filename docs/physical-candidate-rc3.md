@@ -30,4 +30,4 @@ absent probes 3 and 4, and fresh 50% battery.
 
 The rc3 diagnosis motivates a narrowly scoped BlueZ release before reconnect
 in rc4, but rc4 has no physical evidence yet. Four inserted probes, display
-comparison, MQTT/Last Will, restart/session and four-hour soak remain pending.
+comparison, MQTT/Last Will, restart/session and twelve-hour soak remain pending.

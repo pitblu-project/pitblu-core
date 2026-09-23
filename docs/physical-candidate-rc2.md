@@ -30,4 +30,4 @@ recorded service restart.
 The fresh-discovery change in rc2 did not resolve force reconnect on this Pi.
 No final v1.0.0 physical gate is marked passed from this candidate. Four inserted
 probes remain required; display comparison, MQTT/Last Will, restart/session and
-four-hour soak remain pending.
+twelve-hour soak remain pending.

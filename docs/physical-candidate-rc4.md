@@ -31,7 +31,7 @@ record because its exact value is not needed for acceptance.
 
 Long-duration communication after reconnect, recovery during backoff,
 restart/session changes, MQTT/Last Will, four-inserted-probe display comparison
-and four-hour monitored soak remain pending on this candidate.
+and twelve-hour monitored soak remain pending on this candidate.
 
 The operator then selected Disconnect in the guided iGrill management menu;
 the command returned PASS. Authenticated REST confirmed desired and observed

@@ -32,7 +32,7 @@ force reconnect, explicit disconnect, restart session change, REST/SSE/MQTT
 heartbeat representation, broker Last Will and rollback. An accepted asynchronous
 reconnect operation is not proof of success; wait for its terminal result.
 
-Complete at least four hours of monitored physical operation without manual
+Complete at least twelve hours of monitored physical operation without manual
 intervention. Record timestamps, fresh sample cadence, MQTT receipt, gaps,
 interruptions and recovery. Review each gap. Keep the resulting evidence tied to
 the exact candidate commit and physical environment.
