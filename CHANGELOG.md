@@ -3,15 +3,18 @@
 This file is the canonical human-readable version history. Git tags and GitHub
 releases identify published revisions.
 
-## [1.0.0rc4] - candidate
+## [1.0.0rc4] - 2026-09-23 prerelease
 
 - Before manual or automatic reconnect of a registered thermometer, ask BlueZ to
   release a leftover connection for that exact identity after the Bleak client
   disconnects and before fresh discovery. No unpairing or adapter reset is used.
 
-This targets the rc3 physical finding that reconnection repeatedly timed out
-before GATT service resolution. It requires a new physical retest; no v1.0.0
-acceptance gate is marked passed.
+On the Pi, one force reconnect succeeded and resumed physical communication,
+and explicit disconnect correctly stopped polling and recovery. The following
+ordinary Connect timed out during BLE connection/GATT resolution. Automatic
+recovery remained in stale backoff, so the operator rolled back to the working
+v0.9.0 runtime. See the rc4 physical record. This candidate is not accepted for
+v1.0.0; the four-inserted-probe and four-hour-soak gates remain pending.
 
 ## [1.0.0rc3] - 2026-09-23 prerelease
 
