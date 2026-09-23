@@ -2,7 +2,7 @@
 
 ## Candidate identity
 
-The package and API version are `1.0.0rc4`. Record the full reviewed Git commit
+The package and API version are `1.0.0rc5`. Record the full reviewed Git commit
 and tag used for installation before running any Pi checks. The candidate source
 comes from the standalone `pitblu-project/pitblu-core` repository. The historical
 monorepo checkout is not a deployment source.

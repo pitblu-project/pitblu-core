@@ -36,7 +36,7 @@ class BluetoothConfig(_Section):
     scan_duration: float = Field(5, gt=0, le=60)
     missing_scan_interval: float = Field(15, gt=0, le=3600)
     connected_scan_interval: float = Field(60, gt=0, le=3600)
-    connect_timeout: float = Field(10, gt=0, le=120)
+    connect_timeout: float = Field(20, gt=0, le=120)
     initialise_timeout: float = Field(15, gt=0, le=120)
     read_timeout: float = Field(5, gt=0, le=60)
 

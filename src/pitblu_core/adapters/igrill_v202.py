@@ -53,7 +53,7 @@ class BleakIGrillV202Adapter:
         self,
         *,
         name_prefix: str = "iGrill_V202-",
-        connect_timeout: float = 10.0,
+        connect_timeout: float = 20.0,
         initialise_timeout: float = 15.0,
         read_timeout: float = 5.0,
         battery_interval: float = 300.0,

@@ -3,6 +3,17 @@
 This file is the canonical human-readable version history. Git tags and GitHub
 releases identify published revisions.
 
+## [1.0.0rc5] - candidate
+
+- Invalidate the registered-device discovery object on explicit Disconnect so
+  the next ordinary Connect resolves a fresh object, like Force Reconnect.
+- Extend the default bounded BLE connection/GATT resolution deadline from 10
+  to 20 seconds. The configured value remains overridable.
+
+This targets rc4's failed Disconnect then Connect sequence. It is not a proven
+physical correction. Retest that sequence and automatic recovery before any
+v1.0.0 acceptance decision.
+
 ## [1.0.0rc4] - 2026-09-23 prerelease
 
 - Before manual or automatic reconnect of a registered thermometer, ask BlueZ to
