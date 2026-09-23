@@ -9,7 +9,7 @@
 | Heartbeat unknown after restart | Expected until the new service session completes initialisation or a validated read. Old session state is not reused. |
 | MQTT heartbeat is retained | Require current service availability, matching `sessionId`, and a recent timestamp before treating it as current. |
 
-Current release: v0.9.0. For plain-English help, start with the
+Published release: v0.9.0. For plain-English help, start with the
 [cook's quick start](bbq-quick-start.md). These checks concern the installed service,
 not an old milestone proof process.
 
@@ -57,7 +57,7 @@ sudo journalctl -u pitblu-core -n 50 --no-pager
 
 Review logs before sharing. Never send tokens, MQTT passwords, database backups,
 private addresses or unreviewed environment/configuration files. Report version,
-safe errorCode/failureStage, time of failure, physical versus simulated source and
+  safe errorCode/failureStage/failureDetail, time of failure, physical versus simulated source and
 the iGrill display comparison. Do not assert a root cause from a generic failure code.
 
 If the token is lost, arrange controlled local recovery; do not delete the database.

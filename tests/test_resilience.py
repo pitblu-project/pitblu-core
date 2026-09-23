@@ -8,6 +8,7 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
+from pitblu_core.adapters.base import AdapterError
 from pitblu_core.adapters.simulated import SimulatedIGrillAdapter
 from pitblu_core.api import create_app
 from pitblu_core.configuration import ConfigurationManager
@@ -15,7 +16,7 @@ from pitblu_core.connection import BackoffPolicy
 from pitblu_core.events import EventBus, EventType, TelemetryEvent
 from pitblu_core.models import DeviceSnapshot, DiscoveredDevice, TelemetrySource, utc_now
 from pitblu_core.mqtt import MqttPublisher, MqttSettings
-from pitblu_core.service import AdministrationService, StateConflictError
+from pitblu_core.service import AdministrationService, StateConflictError, _safe_failure_detail
 from pitblu_core.storage import AdministrativeStore
 
 
@@ -37,6 +38,15 @@ async def register(service: AdministrationService) -> str:
 async def command(service: AdministrationService, device_id: str) -> None:
     operation = service.start_connection_operation(device_id, "connect")
     await until(lambda: service.operation(str(operation["operationId"]))["status"] == "succeeded")
+
+
+def test_only_fixed_adapter_failure_details_are_reported() -> None:
+    assert (
+        _safe_failure_detail(AdapterError("application challenge write timed out"))
+        == "application challenge write timed out"
+    )
+    assert _safe_failure_detail(AdapterError("native address or credential")) is None
+    assert _safe_failure_detail(RuntimeError("native address or credential")) is None
 
 
 def test_scan_cannot_invalidate_recovery_candidate_before_connect() -> None:
@@ -232,6 +242,7 @@ def test_failed_connection_retries_and_disconnect_cancels_backoff() -> None:
             await until(lambda: bool(delays))
             assert service.device(device_id)["observedState"] == "backoff"
             assert service.diagnostics()["failureType"] == "AdapterDisconnectedError"
+            assert service.diagnostics()["failureDetail"] is None
             assert 1.6 <= delays[0] <= 2.4
             adapter.set_connection_available(True)
             operation = service.start_connection_operation(device_id, "reconnect")
