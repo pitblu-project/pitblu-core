@@ -1,9 +1,9 @@
 # Physical acceptance and remaining release gates
 
-Physical thermometer-heartbeat validation is pending. Automated implementation tests do not
-prove real V202 initialisation/read evidence, no-probe behaviour, communication loss ageing,
-forced reconnect during backoff, restart sessions, or retained MQTT interpretation on the Pi.
-This remains v1.0.0 work and is not marked passed here.
+Full physical thermometer-heartbeat acceptance is pending. Automated implementation tests do
+not prove real V202 communication loss ageing, forced reconnect during backoff, restart
+sessions, or retained MQTT interpretation on the Pi. Earlier candidates provided partial
+initialisation, reading and no-probe evidence, but no candidate passed the entire v1.0.0 suite.
 
 The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
 two-probe and absent-probe observations alongside a repeatable manual reconnect
@@ -12,6 +12,10 @@ failure. The next candidate must retest that failure.
 The [v1.0.0rc2 partial Pi record](physical-candidate-rc2.md) shows the failure
 persisted after fresh BLE discovery. The Pi was restored to the accepted v0.9.0
 installation while the failure is diagnosed.
+
+The [v1.0.0rc3 partial Pi record](physical-candidate-rc3.md) narrowed the repeated
+failure to BLE connection and GATT service resolution timeout. The Pi was again
+restored to the working v0.9.0 runtime.
 
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0

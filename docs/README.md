@@ -2,7 +2,7 @@
 
 ## Version and scope
 
-The published release is v0.9.0 beta; the current candidate is v1.0.0rc3. Clean-Pi
+The published release is v0.9.0 beta; the current candidate is v1.0.0rc4. Clean-Pi
 acceptance passed at the exact runtime revision recorded in the acceptance document.
 The v1.0.0 physical suite and minimum four-hour soak are separate pending gates.
 `CHANGELOG.md` is the canonical human-readable version history; Git tags and
@@ -36,6 +36,7 @@ releases are authoritative once published.
 - [Current acceptance checklist](physical-acceptance.md)
 - [v1.0.0rc1 partial Pi evidence](physical-candidate-rc1.md)
 - [v1.0.0rc2 partial Pi evidence](physical-candidate-rc2.md)
+- [v1.0.0rc3 partial Pi evidence](physical-candidate-rc3.md)
 - [v1.0.0 release candidate plan](v1-release-candidate.md)
 - [Security policy](../SECURITY.md) and [candidate security review](security-review.md)
 - [Dependency audit](dependency-audit.md) and [clean-Pi procedure](clean-pi-acceptance.md)
