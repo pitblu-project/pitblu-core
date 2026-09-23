@@ -21,6 +21,10 @@ The [v1.0.0rc4 partial Pi record](physical-candidate-rc4.md) reports one success
 force reconnect with polling and fresh communication afterwards. Sustained
 operation and the remaining release gates still require physical checks.
 
+The [v1.0.0rc5 partial Pi record](physical-candidate-rc5.md) reports a successful
+explicit Disconnect → ordinary Connect retest with recent communication after
+one minute. Automatic recovery and the other final release gates remain open.
+
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
 physical suite and minimum four-hour soak are **not complete**.

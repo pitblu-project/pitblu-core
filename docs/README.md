@@ -38,6 +38,7 @@ releases are authoritative once published.
 - [v1.0.0rc2 partial Pi evidence](physical-candidate-rc2.md)
 - [v1.0.0rc3 partial Pi evidence](physical-candidate-rc3.md)
 - [v1.0.0rc4 partial Pi evidence](physical-candidate-rc4.md)
+- [v1.0.0rc5 partial Pi evidence](physical-candidate-rc5.md)
 - [v1.0.0 release candidate plan](v1-release-candidate.md)
 - [Security policy](../SECURITY.md) and [candidate security review](security-review.md)
 - [Dependency audit](dependency-audit.md) and [clean-Pi procedure](clean-pi-acceptance.md)
