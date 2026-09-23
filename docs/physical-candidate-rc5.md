@@ -11,7 +11,7 @@ upgrade. An authenticated support check confirmed active service, healthy
 local API and readiness, runtime v1.0.0rc5, the registered physical thermometer
 polling, communication two seconds earlier, four fresh channel responses and
 fresh 50% battery. MQTT was disabled. Four fresh channel responses are not
-proof of four inserted probes; only two are available.
+proof of four inserted probes; only two were inserted at that point.
 
 The operator selected Disconnect in the guided iGrill menu and received PASS.
 Authenticated REST confirmed desired and observed states `disconnected`,
@@ -24,8 +24,8 @@ Disconnect → ordinary Connect retest of the sequence that failed on rc4.
 
 The longer connection deadline and cached-candidate invalidation are both
 present in rc5; the physical result does not isolate which change mattered.
-Connected-but-unresponsive ageing, four-inserted-probe display comparison and
-four-hour monitored soak remain pending on this candidate.
+Connected-but-unresponsive ageing and four-hour monitored soak remain pending
+on this candidate. The four-inserted-probe comparison was completed later.
 
 The operator then powered the thermometer off while leaving the Pi and service
 running. After at least 20 seconds, the authenticated support check showed
@@ -130,5 +130,13 @@ post-restart authenticated support check passed: service active, local API
 healthy, readiness ready, runtime `1.0.0rc5` status okay, MQTT connected,
 physical iGrill polling with communication two seconds earlier, four fresh
 channel responses and fresh 40% battery. This completes the targeted
-service-failure/Last Will/recovery check; it does not substitute for the
-four-hour soak or four-inserted-probe comparison.
+service-failure/Last Will/recovery check; it did not substitute for the
+four-hour soak or four-inserted-probe comparison performed later.
+
+The operator then inserted all four probes. Authenticated REST reported a
+healthy fresh physical heartbeat and all four probes present, fresh and
+physical, with temperatures of 20°C, 20°C, 20°C and 19°C in probe order.
+The operator read the same four values from the iGrill display in that order.
+Each probe therefore matched the display exactly, within the 1°C gate. This
+passes the four-inserted-probe display comparison on rc5; the longer monitored
+soak and connected-but-unresponsive ageing remain separate pending gates.
