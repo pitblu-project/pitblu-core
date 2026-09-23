@@ -12,7 +12,7 @@ from time import monotonic
 from typing import Literal
 from uuid import uuid4
 
-from pitblu_core.adapters.base import DeviceAdapter
+from pitblu_core.adapters.base import AdapterError, DeviceAdapter
 from pitblu_core.connection import BackoffPolicy, ConnectionState, ConnectionStateMachine
 from pitblu_core.events import EventBus, EventType, TelemetryEvent
 from pitblu_core.models import DiscoveredDevice, utc_now
@@ -26,6 +26,30 @@ class ResourceNotFoundError(LookupError):
 
 class StateConflictError(RuntimeError):
     pass
+
+
+_SAFE_ADAPTER_FAILURES = frozenset(
+    {
+        "BLE scan timed out",
+        "BLE connection and GATT service resolution timed out",
+        "application challenge write timed out",
+        "device challenge read timed out",
+        "device response write timed out",
+        "device challenge has an invalid length",
+        "registered-device BlueZ command failed",
+        "registered-device BlueZ connection could not be released",
+        "registered-device BlueZ recovery unavailable",
+    }
+)
+
+
+def _safe_failure_detail(error: Exception) -> str | None:
+    """Expose only fixed first-party adapter messages, never a BLE library message."""
+
+    if type(error) is not AdapterError:
+        return None
+    detail = str(error)
+    return detail if detail in _SAFE_ADAPTER_FAILURES else None
 
 
 def _device_view(row: dict[str, object]) -> dict[str, object]:
@@ -102,6 +126,7 @@ class AdministrationService:
         self.last_error: str | None = None
         self.last_failure_stage: str | None = None
         self.last_failure_type: str | None = None
+        self.last_failure_detail: str | None = None
 
     async def start(self) -> None:
         self.store.interrupt_operations(utc_now().isoformat())
@@ -469,6 +494,7 @@ class AdministrationService:
                 self.last_error = None
                 self.last_failure_stage = None
                 self.last_failure_type = None
+                self.last_failure_detail = None
                 self._start_polling(device_id)
                 self.store.update_device(
                     device_id,
@@ -488,6 +514,7 @@ class AdministrationService:
             self.last_error = "device_operation_failed"
             self.last_failure_stage = stage
             self.last_failure_type = type(exc).__name__
+            self.last_failure_detail = _safe_failure_detail(exc)
             logging.getLogger(__name__).warning(
                 json.dumps(
                     {
@@ -495,6 +522,7 @@ class AdministrationService:
                         "deviceId": device_id,
                         "stage": stage,
                         "failureType": self.last_failure_type,
+                        "failureDetail": self.last_failure_detail,
                     }
                 )
             )
@@ -656,6 +684,7 @@ class AdministrationService:
             "errorCode": self.last_error,
             "failureStage": self.last_failure_stage,
             "failureType": self.last_failure_type,
+            "failureDetail": self.last_failure_detail,
             "discoveryErrorCode": self.discovery_error,
         }
 

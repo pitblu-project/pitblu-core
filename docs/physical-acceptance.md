@@ -9,6 +9,10 @@ The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successfu
 two-probe and absent-probe observations alongside a repeatable manual reconnect
 failure. The next candidate must retest that failure.
 
+The [v1.0.0rc2 partial Pi record](physical-candidate-rc2.md) shows the failure
+persisted after fresh BLE discovery. The Pi was restored to the accepted v0.9.0
+installation while the failure is diagnosed.
+
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
 physical suite and minimum four-hour soak are **not complete**.

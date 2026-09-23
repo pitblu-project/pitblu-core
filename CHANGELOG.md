@@ -3,14 +3,25 @@
 This file is the canonical human-readable version history. Git tags and GitHub
 releases identify published revisions.
 
-## [1.0.0rc2] - candidate
+## [1.0.0rc3] - candidate
+
+- Report only whitelisted first-party adapter failure details to distinguish BLE
+  connection timeout from individual authentication steps. Native library messages,
+  Bluetooth addresses and credentials remain excluded.
+
+This is a diagnostic candidate. The repeated physical reconnect failure remains
+unresolved; do not treat a healthy process or automated tests as acceptance.
+
+## [1.0.0rc2] - 2026-09-23 prerelease
 
 - Refresh the registered thermometer's BLE discovery before manual and automatic
   reconnect attempts, avoiding a stale BlueZ candidate after disconnection.
 - Add a safe failure class to operation diagnostics and journal events; exception
   messages and native Bluetooth identity remain private.
 
-Physical validation of this correction remains pending.
+Pi force reconnect still failed, followed by repeated `AdapterError` failures and
+stale communication. The service was rolled back to the physically accepted v0.9.0
+baseline. The failure detail was not available from this candidate.
 
 ## [1.0.0rc1] - 2026-09-22 prerelease
 
