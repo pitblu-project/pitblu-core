@@ -3,7 +3,16 @@
 This file is the canonical human-readable version history. Git tags and GitHub
 releases identify published revisions.
 
-## [1.0.0rc1] - candidate
+## [1.0.0rc2] - candidate
+
+- Refresh the registered thermometer's BLE discovery before manual and automatic
+  reconnect attempts, avoiding a stale BlueZ candidate after disconnection.
+- Add a safe failure class to operation diagnostics and journal events; exception
+  messages and native Bluetooth identity remain private.
+
+Physical validation of this correction remains pending.
+
+## [1.0.0rc1] - 2026-09-22 prerelease
 
 - Added guided `pitblu-core-install` and `pitblu-core-config` terminal workflows.
 - Added validated thermometer communication heartbeat to REST, SSE and MQTT, with
@@ -11,8 +20,10 @@ releases identify published revisions.
 - Updated dependencies and restored standalone CI and documentation ownership.
 - Changed the pending v1.0.0 physical soak requirement from 16 hours to four hours.
 
-This candidate has automated validation. Real Pi/iGrill heartbeat, four-probe,
-recovery and four-hour soak acceptance remain pending. It is not a final release.
+Automated validation passed. Pi testing found healthy physical communication,
+correct absent-probe handling and probe removal within 5.4 seconds, but repeated
+manual reconnects failed during initialisation before automatic recovery restored
+communication. The four-probe and four-hour soak gates were not completed.
 
 ## [0.9.0] - 2026-09-10
 

@@ -73,6 +73,45 @@ def test_scan_cannot_invalidate_recovery_candidate_before_connect() -> None:
     asyncio.run(exercise())
 
 
+def test_reconnect_resolves_registered_identity_after_old_candidate_expires() -> None:
+    class RotatingCandidateAdapter(SimulatedIGrillAdapter):
+        scans = 0
+
+        async def discover(self, duration: float) -> tuple[DiscoveredDevice, ...]:
+            self.scans += 1
+            return await super().discover(duration)
+
+        async def disconnect(self) -> None:
+            await super().disconnect()
+            self._candidate = replace(
+                self._candidate, discovery_id=f"candidate-after-disconnect-{self.scans}"
+            )
+
+    async def exercise() -> None:
+        adapter = RotatingCandidateAdapter(clock=utc_now)
+        store = AdministrativeStore()
+        service = AdministrationService(adapter, store)
+        try:
+            device_id = await register(service)
+            await command(service, device_id)
+            operation = service.start_connection_operation(device_id, "reconnect")
+            await until(
+                lambda: (
+                    service.operation(str(operation["operationId"]))["status"]
+                    in {"succeeded", "failed"}
+                )
+            )
+            assert service.operation(str(operation["operationId"]))["status"] == "succeeded"
+            assert adapter.scans == 2
+            assert service.device(device_id)["observedState"] == "polling"
+            assert service.diagnostics()["failureType"] is None
+        finally:
+            await service.close()
+            store.close()
+
+    asyncio.run(exercise())
+
+
 def test_restart_releases_only_registered_leftover_connection() -> None:
     class LeftoverAdapter(SimulatedIGrillAdapter):
         stuck = True
@@ -192,6 +231,7 @@ def test_failed_connection_retries_and_disconnect_cancels_backoff() -> None:
             service.start_connection_operation(device_id, "connect")
             await until(lambda: bool(delays))
             assert service.device(device_id)["observedState"] == "backoff"
+            assert service.diagnostics()["failureType"] == "AdapterDisconnectedError"
             assert 1.6 <= delays[0] <= 2.4
             adapter.set_connection_available(True)
             operation = service.start_connection_operation(device_id, "reconnect")

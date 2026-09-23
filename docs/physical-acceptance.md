@@ -5,6 +5,10 @@ prove real V202 initialisation/read evidence, no-probe behaviour, communication 
 forced reconnect during backoff, restart sessions, or retained MQTT interpretation on the Pi.
 This remains v1.0.0 work and is not marked passed here.
 
+The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
+two-probe and absent-probe observations alongside a repeatable manual reconnect
+failure. The next candidate must retest that failure.
+
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
 physical suite and minimum four-hour soak are **not complete**.
