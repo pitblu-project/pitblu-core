@@ -370,7 +370,7 @@ means strictly greater than zero. Validate through the API, not metadata alone.
 | `bluetooth.scan_duration` | 5 | Seconds, >0..60. |
 | `bluetooth.missing_scan_interval` | 15 | Seconds, >0..3600. |
 | `bluetooth.connected_scan_interval` | 60 | Seconds, >0..3600. |
-| `bluetooth.connect_timeout` | 10 | Seconds, >0..120. |
+| `bluetooth.connect_timeout` | 20 | Seconds, >0..120. |
 | `bluetooth.initialise_timeout` | 15 | Seconds, >0..120. |
 | `bluetooth.read_timeout` | 5 | Seconds, >0..60. |
 | `polling.probe_interval` | 5 | Seconds, >0..300; work duration can lengthen observed cadence. |

@@ -83,7 +83,7 @@ def test_scan_cannot_invalidate_recovery_candidate_before_connect() -> None:
     asyncio.run(exercise())
 
 
-def test_reconnect_resolves_registered_identity_after_old_candidate_expires() -> None:
+def test_registered_connect_and_reconnect_resolve_fresh_candidates() -> None:
     class RotatingCandidateAdapter(SimulatedIGrillAdapter):
         scans = 0
         reconnect_events: list[str]
@@ -128,6 +128,25 @@ def test_reconnect_resolves_registered_identity_after_old_candidate_expires() ->
             assert adapter.reconnect_events == ["discover", "disconnect", "release", "discover"]
             assert service.device(device_id)["observedState"] == "polling"
             assert service.diagnostics()["failureType"] is None
+
+            disconnect = service.start_connection_operation(device_id, "disconnect")
+            await until(
+                lambda: service.operation(str(disconnect["operationId"]))["status"] == "succeeded"
+            )
+            assert service.device(device_id)["observedState"] == "disconnected"
+            ordinary_connect = service.start_connection_operation(device_id, "connect")
+            await until(
+                lambda: (
+                    service.operation(str(ordinary_connect["operationId"]))["status"]
+                    in {"succeeded", "failed"}
+                )
+            )
+            assert service.operation(str(ordinary_connect["operationId"]))["status"] == (
+                "succeeded"
+            )
+            assert adapter.scans == 3
+            assert adapter.reconnect_events[-2:] == ["disconnect", "discover"]
+            assert service.device(device_id)["observedState"] == "polling"
         finally:
             await service.close()
             store.close()

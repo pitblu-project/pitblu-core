@@ -412,6 +412,7 @@ class AdministrationService:
                 if self._owner in {None, device_id}:
                     async with self._io_lock:
                         await self.adapter.disconnect()
+                        self._candidates.pop(str(row["discovery_id"]), None)
                     self._connected_device = None
                     self._owner = None
                 await self.telemetry.connection(device_id, "disconnected")
@@ -445,7 +446,8 @@ class AdministrationService:
                 async with self._io_lock:
                     stage = "discovery"
                     # A BLEDevice resolved before disconnect can refer to an obsolete
-                    # BlueZ object. Re-resolve the registered identity for reconnects.
+                    # BlueZ object. Re-resolve reconnects; explicit Disconnect also
+                    # invalidates its cached candidate before the next Connect.
                     candidate = (
                         None
                         if action == "reconnect" and row.get("identity") is not None

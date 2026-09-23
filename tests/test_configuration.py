@@ -19,6 +19,7 @@ def test_configuration_layers_and_metadata(tmp_path: Path) -> None:
     assert description["settings"]["bluetooth.scan_duration"]["source"] == "yaml"
     assert description["settings"]["mqtt.enabled"]["value"] is True
     assert description["settings"]["server.port"]["default"] == 8080
+    assert description["settings"]["bluetooth.connect_timeout"]["default"] == 20
 
     manager.update({"bluetooth.scan_duration": 8}, expected_version=1)
     assert manager.version == 2
