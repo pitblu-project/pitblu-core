@@ -27,7 +27,8 @@ one minute. Automatic recovery and the other final release gates remain open.
 
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
-physical suite and minimum twelve-hour soak are **not complete**.
+physical suite is **not complete**. The four-probe comparison and minimum
+twelve-hour soak passed later on rc5; see [candidate evidence](physical-candidate-rc5.md).
 
 ## Clean-Pi v0.9.0 evidence: recorded 10 September 2026
 
