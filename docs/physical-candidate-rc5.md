@@ -24,8 +24,9 @@ Disconnect → ordinary Connect retest of the sequence that failed on rc4.
 
 The longer connection deadline and cached-candidate invalidation are both
 present in rc5; the physical result does not isolate which change mattered.
-Connected-but-unresponsive ageing and twelve-hour monitored soak remain pending
-on this candidate. The four-inserted-probe comparison was completed later.
+Connected-but-unresponsive ageing remains pending on this candidate. The
+four-inserted-probe comparison and twelve-hour monitored soak were completed
+later.
 
 The operator then powered the thermometer off while leaving the Pi and service
 running. After at least 20 seconds, the authenticated support check showed
@@ -138,5 +139,26 @@ healthy fresh physical heartbeat and all four probes present, fresh and
 physical, with temperatures of 20°C, 20°C, 20°C and 19°C in probe order.
 The operator read the same four values from the iGrill display in that order.
 Each probe therefore matched the display exactly, within the 1°C gate. This
-passes the four-inserted-probe display comparison on rc5; the longer monitored
-soak and connected-but-unresponsive ageing remain separate pending gates.
+passes the four-inserted-probe display comparison on rc5.
+
+The operator ran the exact merged `scripts/physical_soak.py` recorder from
+commit `22878813c2512802943d04160b58897f3befe2ad` against the installed
+rc5 runtime, with all four probes inserted and MQTT enabled. The run began at
+2026-09-23 18:21:41 UTC and ended at 2026-09-24 06:21:41 UTC. Its JSONL
+summary recorded exactly 43,200.0 elapsed seconds, 7,094 authenticated REST
+samples, zero bad REST samples, zero service-session changes, 23,904 live
+MQTT temperature messages (5,976 per probe), zero MQTT gaps or errors and a
+maximum observed MQTT temperature gap of 11.8 seconds. It reported
+`reviewRequired: false`.
+
+An independent read-only audit of all 36,979 JSONL lines found one start,
+one MQTT connection, 29,882 MQTT messages, 7,094 REST records and one summary.
+Every REST record was good; all temperature messages were physical, QoS 1 and
+non-retained. The REST records contained one service session. There were no
+REST/MQTT error, MQTT-gap, session-change or offline-service records. The
+operator retains the timestamped log as
+`pitblu-core-rc5-soak-20260923T182141Z.jsonl`. This passes the minimum
+twelve-hour monitored physical soak on rc5; the log is not reproduced in this
+repository. Connected-but-unresponsive ageing remains untested, and a change
+to the runtime candidate would require relevant physical retesting before a
+final v1.0.0 release decision.

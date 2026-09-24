@@ -1,9 +1,10 @@
 # Physical acceptance and remaining release gates
 
 Full physical thermometer-heartbeat acceptance is pending. Automated implementation tests do
-not prove real V202 communication loss ageing, forced reconnect during backoff, restart
-sessions, or retained MQTT interpretation on the Pi. Earlier candidates provided partial
-initialisation, reading and no-probe evidence, but no candidate passed the entire v1.0.0 suite.
+not prove real V202 behaviour on the Pi. The rc5 physical record now includes force
+reconnect during backoff, restart/session changes, retained MQTT interpretation,
+four-inserted-probe comparison and a twelve-hour monitored soak. Connected-but-
+unresponsive ageing remains untested; no candidate has passed the entire v1.0.0 suite.
 
 The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
 two-probe and absent-probe observations alongside a repeatable manual reconnect
@@ -22,12 +23,14 @@ force reconnect with polling and fresh communication afterwards. Sustained
 operation and the remaining release gates still require physical checks.
 
 The [v1.0.0rc5 partial Pi record](physical-candidate-rc5.md) reports a successful
-explicit Disconnect → ordinary Connect retest with recent communication after
-one minute. Automatic recovery and the other final release gates remain open.
+explicit Disconnect → ordinary Connect retest, automatic recovery, physical
+MQTT/Last Will checks, four-probe display comparison and twelve-hour soak.
+The remaining final release gates stay open.
 
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
-physical suite and minimum twelve-hour soak are **not complete**.
+physical suite is **not complete**. The four-probe comparison and minimum
+twelve-hour soak passed later on rc5; see [candidate evidence](physical-candidate-rc5.md).
 
 ## Clean-Pi v0.9.0 evidence: recorded 10 September 2026
 
