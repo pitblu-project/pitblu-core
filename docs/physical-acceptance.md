@@ -1,9 +1,10 @@
 # Physical acceptance and remaining release gates
 
 Full physical thermometer-heartbeat acceptance is pending. Automated implementation tests do
-not prove real V202 communication loss ageing, forced reconnect during backoff, restart
-sessions, or retained MQTT interpretation on the Pi. Earlier candidates provided partial
-initialisation, reading and no-probe evidence, but no candidate passed the entire v1.0.0 suite.
+not prove real V202 behaviour on the Pi. The rc5 physical record now includes force
+reconnect during backoff, restart/session changes, retained MQTT interpretation,
+four-inserted-probe comparison and a twelve-hour monitored soak. Connected-but-
+unresponsive ageing remains untested; no candidate has passed the entire v1.0.0 suite.
 
 The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
 two-probe and absent-probe observations alongside a repeatable manual reconnect
