@@ -1,8 +1,8 @@
 # pitblu-core integration contract for pitblu-app
 
-Contract: **v0.9.0**, clean-installed and acceptance-tested on the target Pi.
-The rc5 four-probe display comparison and twelve-hour soak passed; the full
-v1.0.0 physical suite remains pending.
+Contract: **v1.0.0**. The rc5 four-probe display comparison and twelve-hour soak
+passed on the target Pi. Other final physical checks were waived for publication;
+the stable tag has not yet been smoke-tested on the Pi. See [release status](release-status.md).
 
 ## 1. Purpose and architecture
 

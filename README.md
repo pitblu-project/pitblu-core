@@ -6,9 +6,11 @@ independent of the future web frontend and contains no cook-history database or 
 
 Source lives in the public `pitblu-project/pitblu-core` repository.
 Run installation, development and build commands from the repository root.
-The published release is 0.9.0. The 1.0.0rc5 candidate contains the guided tools
-and thermometer heartbeat. The four-probe display comparison and twelve-hour
-soak passed on rc5; the full physical suite remains pending.
+The current release is v1.0.0, adding guided tools and a thermometer
+communication heartbeat. The four-probe display comparison and twelve-hour
+soak passed on rc5. The release owner waived the remaining physical acceptance
+gates for publication; they are not recorded as passed. See the
+[release status](docs/release-status.md) before deploying.
 
 Start with the repository's [guided terminal tools](docs/terminal-tools.md).
 See the documentation index for installation, security, API/MQTT

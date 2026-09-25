@@ -17,8 +17,8 @@ The v1.0 terminal workflow is **install → configure → verify**. It is design
 the Raspberry Pi console or an interactive SSH session. Neither tool needs to run as root; each
 privileged action is shown and delegated to `sudo` as a fixed command.
 
-These tools are part of the v1.0 workstream and have automated coverage. The outstanding physical
-Pi/iGrill and soak gates remain listed in [physical acceptance](physical-acceptance.md).
+These tools ship in v1.0.0 and have automated coverage. The rc5 physical soak
+passed; other waived checks remain listed in [physical acceptance](physical-acceptance.md).
 
 ## Install or upgrade
 

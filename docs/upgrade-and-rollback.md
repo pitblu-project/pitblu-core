@@ -7,6 +7,8 @@ Run the normal guided upgrade from a reviewed GitHub checkout with
 `pitblu-core/` directory.
 
 The v0.9.0 clean-install, upgrade, rollback and reboot-recovery checks passed on the Pi.
+Rc5 upgrade and recovery checks are in the [physical record](physical-candidate-rc5.md).
+The stable v1.0.0 tag has not itself been smoke-tested on the Pi at publication.
 Never upgrade during a cook.
 All operations use a deployment lock and fixed production roots. The home-directory test installation
 is not modified. Old releases and backups are retained; there is no automatic garbage collection.

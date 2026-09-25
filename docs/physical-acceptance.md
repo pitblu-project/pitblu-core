@@ -1,14 +1,16 @@
-# Physical acceptance and remaining release gates
+# Physical acceptance checklist and evidence boundary
 
-Full physical thermometer-heartbeat acceptance is pending. Automated implementation tests do
-not prove real V202 behaviour on the Pi. The rc5 physical record now includes force
+Full physical thermometer-heartbeat acceptance is incomplete. The release owner
+waived the remaining gates for v1.0.0 publication; unrun checks are not passes.
+Automated implementation tests do not prove real V202 behaviour on the Pi. The
+rc5 physical record now includes force
 reconnect during backoff, restart/session changes, retained MQTT interpretation,
 four-inserted-probe comparison and a twelve-hour monitored soak. Connected-but-
 unresponsive ageing remains untested; no candidate has passed the entire v1.0.0 suite.
 
 The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
 two-probe and absent-probe observations alongside a repeatable manual reconnect
-failure. The next candidate must retest that failure.
+failure. Later candidates retested that failure.
 
 The [v1.0.0rc2 partial Pi record](physical-candidate-rc2.md) shows the failure
 persisted after fresh BLE discovery. The Pi was restored to the accepted v0.9.0
@@ -25,7 +27,7 @@ operation and the remaining release gates still require physical checks.
 The [v1.0.0rc5 partial Pi record](physical-candidate-rc5.md) reports a successful
 explicit Disconnect → ordinary Connect retest, automatic recovery, physical
 MQTT/Last Will checks, four-probe display comparison and twelve-hour soak.
-The remaining final release gates stay open.
+The remaining final physical checks stay open despite publication.
 
 The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
 final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
@@ -60,15 +62,14 @@ migration. They remain useful evidence but are superseded for the v0.9.0
 clean-install gate by the record above. Neither record constitutes four-inserted-
 probe acceptance, independent penetration testing or a twelve-hour soak.
 
-## v0.9.0 audit gates
+## Historical v0.9.0 gate
 
-The clean-Pi gate passed. Follow the [current audit plan](v0.9.0-plan.md) for final
-documentation, provenance, CI and release review.
+The v0.9.0 clean-Pi gate passed. Its evidence does not validate v1.0.0.
 
-## v1.0.0 physical release checklist
+## v1.0.0 physical checklist (remaining items waived for publication)
 
-Run against the final candidate, recording the exact revision and environment.
-These remain final-candidate checks even where earlier milestones provide evidence.
+Record the exact revision and environment for any follow-up. The rc5 evidence
+closes some items, but missing final-candidate evidence must remain unverified.
 
 - Discover the V202 within 20 seconds and register/connect through REST.
 - Resolve expected Weber services and read all four inserted probe channels.

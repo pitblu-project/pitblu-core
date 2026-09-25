@@ -21,7 +21,7 @@ availability reuses sequence values and must not use device-telemetry deduplicat
 For normal terminal setup, run `pitblu-core-config mqtt`; it validates the same settings described
 below and keeps the password on a hidden, write-only path.
 
-The v0.9.0 release publishes telemetry to MQTT when `mqtt.enabled` is true. MQTT is a read-only data
+The v1.0.0 release publishes telemetry to MQTT when `mqtt.enabled` is true. MQTT is a read-only data
 plane: the service does not subscribe to or accept administrative commands. The default broker is
 local, but host, port, TLS, username and base topic are configurable. The password is managed only
 through the write-only secret API.

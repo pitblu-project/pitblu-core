@@ -1,4 +1,4 @@
-# v0.9.0 security and correctness review
+# Historical v0.9.0 security and correctness review
 
 Review dates: 8-10 September 2026. Scope: source review, automated regression tests
 and clean installed-system checks against the v0.9.0rc1 implementation. This is an
@@ -77,6 +77,7 @@ headers/correlation, battery cadence/timestamps, safe host diagnostic output,
 configuration conflicts, stale readings, MQTT retry and deployment-state helpers.
 Run full lint, format, type, test and Linux CI checks after the final release edit.
 Clean-Pi installation, operating-system permissions and physical two-probe readings
-have passed. Final pull-request review remains required before v0.9.0 release
-approval. The rc5 four-probe comparison and twelve-hour soak passed; the full
-v1.0.0 physical suite remains pending.
+have passed. This is a historical v0.9.0 snapshot, not a new v1.0.0 security
+certification. The rc5 four-probe comparison and twelve-hour soak passed, while
+other v1.0.0 physical checks were waived for publication; see
+[release status](release-status.md).
