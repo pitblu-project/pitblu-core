@@ -32,7 +32,7 @@ is running the application on any other host that can reach the gateway.
 ## Thermometer gateway internals
 
 The remainder of this section describes pitblu-core specifically. Its authoritative target is a native, headless Raspberry Pi gateway with separate control and
-telemetry planes. The v0.9.0 release implements both planes over the shared device boundary.
+telemetry planes. The v1.0.0 release implements both planes over the shared device boundary.
 
 `DeviceAdapter` is the only device-facing boundary. The production and simulated V202 adapters
 both implement asynchronous discovery, connection, disconnection and snapshot reads. Their shared

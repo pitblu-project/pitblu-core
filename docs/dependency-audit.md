@@ -28,7 +28,7 @@ a signed SBOM. CI remains the normal source of per-Python inventory and audit
 artefacts.
 
 The local pip-audit 2.10.1 query returned no known advisories for installed packages.
-The private project itself is not on PyPI and was explicitly reported as skipped;
+The project itself is not on PyPI and was explicitly reported as skipped;
 its security review is source-based. Tooling and build dependencies are rechecked
 in CI after installation. A clean scan does not establish absence of vulnerabilities.
 
@@ -86,14 +86,14 @@ preinstalled setuptools 79.0.1 triggered
 an exclusion issue when building source archives on Unicode-normalising filesystems.
 It is not a declared gateway runtime dependency. CI now explicitly installs
 setuptools 83.0.0, the scanner's reported fixed version, before building/testing,
-and reruns the scan rather than ignoring the finding. Final rerun evidence follows
-in the milestone plan. The gateway itself uses Hatchling, not setuptools, to build.
+and reruns the scan rather than ignoring the finding. Consult current CI for
+the latest scan result. The gateway itself uses Hatchling, not setuptools, to build.
 
 ## Publication boundary
 
 Source releases contain the original project and its notices, not copied external
 source or bundled site-packages. No known reviewed dependency requires changing the
-original project's MIT licence under this distribution model. Keep the repository
-private unless the owner explicitly chooses otherwise. The actual target Linux
+original project's MIT licence under this distribution model. The repository is
+public; do not publish secrets or platform-specific resolved snapshots. The actual target Linux
 resolution and clean wheel installation were reviewed for v0.9.0. Future releases
 must repeat that review for their resolved dependencies and build artefacts.

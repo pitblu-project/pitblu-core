@@ -2,8 +2,8 @@
 
 The repository contains the gateway source, pinned direct Python requirements,
 native installer, systemd unit, startup configuration template, tests, protocol
-fixtures, API/MQTT documentation and licence notices. The web component is a
-placeholder, not a deployable frontend.
+fixtures, API/MQTT documentation and licence notices. The web/Cook application
+lives in the separate [pitblu-app repository](https://github.com/pitblu-project/pitblu-app).
 
 ## Before erasing storage
 
@@ -13,8 +13,7 @@ It intentionally does not contain administrator tokens, MQTT passwords/password
 files, broker ACLs, device registrations, private addresses, SSH configuration or
 the administrative SQLite database. Store credentials privately.
 
-The repository is currently private. Confirm authenticated, least-privilege GitHub
-access before erasing the Pi. For the normal rebuild path, clone the repository,
+The source repository is public. For the normal rebuild path, clone the repository,
 check out the exact reviewed release tag or full commit, and record its full revision
 with the test results. Do not place GitHub credentials in commands or logs. An
 archive produced by GitHub from the same revision is suitable for offline recovery,

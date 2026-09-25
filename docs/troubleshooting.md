@@ -9,7 +9,7 @@
 | Heartbeat unknown after restart | Expected until the new service session completes initialisation or a validated read. Old session state is not reused. |
 | MQTT heartbeat is retained | Require current service availability, matching `sessionId`, and a recent timestamp before treating it as current. |
 
-Published release: v0.9.0. For plain-English help, start with the
+Published release: v1.0.0. For plain-English help, start with the
 [cook's quick start](bbq-quick-start.md). These checks concern the installed service,
 not an old milestone proof process.
 

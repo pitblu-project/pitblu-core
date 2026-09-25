@@ -5,7 +5,7 @@ Use `pitblu-core-config` for supported local terminal configuration and
 the safe workflow. The [frontend integration guide](frontend-integration.md) lists every setting and
 explains configuration-editor workflows and saved-versus-running behaviour.
 
-The v0.9.0 release exposes typed application settings through REST. Precedence is:
+The v1.0.0 release exposes typed application settings through REST. Precedence is:
 
 1. package default;
 2. optional YAML startup file;

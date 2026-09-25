@@ -24,11 +24,10 @@ thermometer and not a controller for your barbecue.
 - Start automatically when a properly installed Pi starts.
 - Share live readings with a separate application.
 
-The current release is v0.9.0 beta. Clean-Pi acceptance passed; the complete
-four-probe physical suite remains a v1.0.0 gate. The four-probe display
-comparison and twelve-hour soak passed on rc5; check the
-[acceptance record](physical-acceptance.md) before relying on the gateway for an
-unattended cook.
+The current release is v1.0.0. The four-probe display comparison and twelve-hour
+soak passed on rc5, but the release owner waived other incomplete physical checks.
+Read the [release status](release-status.md) before relying on the gateway for an
+unattended cook. Continue independent temperature checks.
 
 ## What will I see on my phone?
 

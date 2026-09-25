@@ -2,7 +2,7 @@
 
 ## Supported deployment
 
-The published v0.9.0 release and v1.0.0rc1 candidate are intended for loopback
+The published v1.0.0 release is intended for loopback
 or an explicitly trusted LAN. Do not expose HTTP or the MQTT broker directly to
 the internet. There is no built-in HTTPS, end-user account system or safety alarm.
 

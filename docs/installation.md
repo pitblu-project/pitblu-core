@@ -1,6 +1,8 @@
 # Native installation
 
-The guided commands described here are v1.0 work built on the proven v0.9.0 native deployment.
+The guided commands described here ship in v1.0.0, building on the historical
+v0.9.0 native deployment. Check [release status](release-status.md) for the
+physical acceptance limitations before upgrading.
 Read [migration](rename-migration.md) before changing an existing deployment.
 
 Target: Raspberry Pi OS Trixie, 64-bit ARM, Python 3.13, systemd and BlueZ. Docker is not used.

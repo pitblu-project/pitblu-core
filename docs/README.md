@@ -2,10 +2,9 @@
 
 ## Version and scope
 
-The published release is v0.9.0 beta; the current candidate is v1.0.0rc5. Clean-Pi
-acceptance passed at the exact runtime revision recorded in the acceptance document.
-The rc5 four-probe display comparison and twelve-hour soak passed; the full
-v1.0.0 physical suite remains pending.
+The current release is v1.0.0. The rc5 four-probe display comparison and
+twelve-hour soak passed, but the owner waived the remaining physical gates for
+publication; they are not claimed as passed. See [release status](release-status.md).
 `CHANGELOG.md` is the canonical human-readable version history; Git tags and
 releases are authoritative once published.
 
@@ -34,17 +33,15 @@ releases are authoritative once published.
 
 ## Release assurance
 
-- [Current acceptance checklist](physical-acceptance.md)
+- [v1.0.0 release notes](v1.0.0-release-notes.md) and [release status](release-status.md)
+- [Physical acceptance checklist](physical-acceptance.md)
 - [v1.0.0rc1 partial Pi evidence](physical-candidate-rc1.md)
 - [v1.0.0rc2 partial Pi evidence](physical-candidate-rc2.md)
 - [v1.0.0rc3 partial Pi evidence](physical-candidate-rc3.md)
 - [v1.0.0rc4 partial Pi evidence](physical-candidate-rc4.md)
 - [v1.0.0rc5 partial Pi evidence](physical-candidate-rc5.md)
-- [v1.0.0 release candidate plan](v1-release-candidate.md)
-- [Security policy](../SECURITY.md) and [candidate security review](security-review.md)
+- [Security policy](../SECURITY.md) and [historical v0.9.0 security review](security-review.md)
 - [Dependency audit](dependency-audit.md) and [clean-Pi procedure](clean-pi-acceptance.md)
-- [Historical v0.9.0 audit plan](v0.9.0-plan.md), not completed functionality
-- [Candidate status](release-status.md), validation and publication boundaries
 - [Changelog](../CHANGELOG.md), v0.9.0 onward
 - [Provenance](provenance.md), [third-party notices](../THIRD_PARTY_NOTICES.md), [licence](../LICENSE)
 - Decisions: [hardware-first](adr/0001-incremental-hardware-first.md),
@@ -57,7 +54,7 @@ releases are authoritative once published.
 
 Maintain one current installation path and integration contract. Remove superseded
 plans and obsolete command sequences from active documentation; Git history retains
-them. Active documentation begins at v0.9.0. Preserve relevant licence/provenance
+them. Active documentation targets v1.0.0. Preserve relevant licence/provenance
 and architectural rationale without obsolete milestone instructions.
 
 Update affected guides alongside code changes. Verify relative links and examples,

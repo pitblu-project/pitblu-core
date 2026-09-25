@@ -6,7 +6,7 @@ freshness. If it is stale, normally wait for automatic recovery. To request an i
 run `pitblu-core-config igrill reconnect`; the command waits for the operation and verifies the
 refreshed thermometer state.
 
-This guide is for v0.9.0. There is no phone-friendly dashboard
+This guide is for v1.0.0. There is no phone-friendly dashboard
 yet. Start with [the plain-English overview](bbq-overview.md) if you are new to the
 project.
 
@@ -81,7 +81,7 @@ not send passwords, access tokens or unreviewed logs.
 
 There are no built-in alerts, cooking targets or temperature-history graphs.
 The minimum twelve-hour physical reliability test passed on rc5, but the full
-v1.0.0 physical suite remains pending. A soak is not a guarantee for every
+physical suite remains incomplete by release-owner waiver. A soak is not a guarantee for every
 overnight cook. Keep independent temperature checks.
 
 ## After the cook
