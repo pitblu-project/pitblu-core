@@ -1,4 +1,4 @@
-"""Operator-run twelve-hour physical soak recorder for the exact installed candidate.
+"""Operator-run twelve-hour physical soak recorder for the exact installed release.
 
 Run with the installed pitblu-core virtualenv Python. Credentials are prompted
 interactively and never written to the evidence log.
@@ -31,7 +31,7 @@ def utc_now() -> str:
 class Evidence:
     def __init__(self) -> None:
         stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-        self.path = Path.home() / f"pitblu-core-rc5-soak-{stamp}.jsonl"
+        self.path = Path.home() / f"pitblu-core-v1-soak-{stamp}.jsonl"
         fd = os.open(self.path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
         self.file = os.fdopen(fd, "w", encoding="utf-8", buffering=1)
 
@@ -57,7 +57,7 @@ def read_rest(client: ApiClient, path: str) -> dict[str, Any]:
         for p in probes
     )
     good = (
-        status["version"] == "1.0.0rc5"
+        status["version"] == "1.0.0"
         and status["mqtt"]["state"] == "connected"
         and device["observedState"] == "polling"
         and heartbeat["status"] == "healthy"

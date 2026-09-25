@@ -3,6 +3,21 @@
 This file is the canonical human-readable version history. Git tags and GitHub
 releases identify published revisions.
 
+## [1.0.0] - 2026-09-25
+
+- Published the guided install/configuration tools and thermometer communication
+  heartbeat first introduced in rc1, with the reconnect corrections through rc5.
+- The rc5 Pi record confirms explicit Disconnect/Connect, force reconnect,
+  automatic recovery, four physical probes matching the display, MQTT/SSE
+  telemetry and a twelve-hour monitored soak with no recorded anomalies.
+- The release owner directed publication with the remaining final physical
+  acceptance gates waived. Connected-but-unresponsive heartbeat ageing and
+  other unrecorded checklist items are **not** claimed as passed. The stable
+  package has not yet been independently smoke-tested on the Pi.
+
+See [release status](docs/release-status.md) and the
+[rc5 physical record](docs/physical-candidate-rc5.md) for the precise boundary.
+
 ## [1.0.0rc5] - candidate
 
 - Invalidate the registered-device discovery object on explicit Disconnect so
@@ -10,9 +25,8 @@ releases identify published revisions.
 - Extend the default bounded BLE connection/GATT resolution deadline from 10
   to 20 seconds. The configured value remains overridable.
 
-This targets rc4's failed Disconnect then Connect sequence. It is not a proven
-physical correction. Retest that sequence and automatic recovery before any
-v1.0.0 acceptance decision.
+This targets rc4's failed Disconnect then Connect sequence. Subsequent rc5 Pi
+testing confirmed that sequence and automatic recovery; see the rc5 record.
 
 ## [1.0.0rc4] - 2026-09-23 prerelease
 
