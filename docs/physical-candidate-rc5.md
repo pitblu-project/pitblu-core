@@ -193,3 +193,16 @@ fresh 30% battery. No manual gateway restart or reconnect was requested. This
 passes targeted recovery from a BlueZ service interruption. It does not prove
 the distinct case where BLE remains connected but recognised GATT exchanges
 stop succeeding long enough for the thermometer heartbeat to age to stale.
+
+The operator made a further timed iGrill power-off observation specifically
+to look for that connected-but-unresponsive condition. At 0.0 seconds the
+runtime reported `connected=true`, observed polling and a healthy fresh
+heartbeat. At 9.7 seconds it reported `connected=false`, observed backoff,
+while the heartbeat was still healthy and fresh. The heartbeat became stale
+and not fresh at 15.7 seconds, but runtime connection remained false and
+observed state remained backoff. Thus the power-off test did **not** observe
+the required combination of a connected runtime and stale heartbeat; that
+gate remains pending. After the operator turned the iGrill back on, the
+heartbeat became healthy/fresh by 24.2 seconds and observed polling resumed
+by 27.7 seconds without a manual gateway reconnect. This independently
+confirms power-on automatic recovery, not connected-but-unresponsive ageing.
