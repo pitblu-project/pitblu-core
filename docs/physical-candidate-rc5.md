@@ -162,3 +162,22 @@ twelve-hour monitored physical soak on rc5; the log is not reproduced in this
 repository. Connected-but-unresponsive ageing remains untested, and a change
 to the runtime candidate would require relevant physical retesting before a
 final v1.0.0 release decision.
+
+After the soak, with no active cook, the operator restarted the local Mosquitto
+broker while leaving pitblu-core running. About one minute later, the support
+check showed the service active, ready, MQTT connected and the physical iGrill
+polling with communication seven seconds earlier and fresh 40% battery. A
+separate authenticated subscriber then received retained QoS 1 service
+availability (`available=true`) and retained QoS 1 device heartbeat
+(`healthy`, `fresh=true`), both matching the current runtime session. This
+passes broker-restart reconnection and retained-state restoration on rc5.
+
+The operator then rebooted the Pi with no active cook. The kernel boot ID
+changed, proving a new boot. Without manually starting the gateway, the
+post-boot support check reported service active, local API healthy, readiness
+ready, runtime `1.0.0rc5`, MQTT connected, physical iGrill polling with
+communication five seconds earlier and fresh 30% battery. Authenticated REST
+then confirmed all four probes present, fresh and physical, at 19°C, 18°C,
+20°C and 19°C in probe order. This passes targeted Pi-reboot automatic startup
+and physical/MQTT recovery on rc5. It does not exercise the distinct
+connected-but-unresponsive ageing condition.
