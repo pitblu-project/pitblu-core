@@ -1,7 +1,8 @@
 # Historical v0.9.0 security and correctness review
 
 Review dates: 8-10 September 2026. Scope: source review, automated regression tests
-and clean installed-system checks against the v0.9.0rc1 implementation. This is an
+and clean installed-system checks against the implementation at commit
+`f3bc11488e72b966676c0f3a1844ea218259ab90`. This is an
 engineering review, not independent penetration testing or a security certification.
 
 ## Threat model
@@ -19,13 +20,13 @@ deployment. An authorised administrator can select an MQTT destination by design
 | Area | Review and disposition |
 | --- | --- |
 | Authentication | Salted scrypt and constant-time comparison retained; malformed token lengths/characters now rejected before hashing. Hash work is off the event loop with two concurrent workers and a bounded request admission rate. Rotation invalidates the saved old hash. |
-| Public surface | Only health remains unconditionally public in token mode. Candidate schema/Swagger/ReDoc routes now require authentication. Already-open SSE authenticates on admission; rotation does not revoke that stream. Documented limitation. |
+| Public surface | Only health remains unconditionally public in token mode. Schema/Swagger/ReDoc routes require authentication. Already-open SSE authenticates on admission; rotation does not revoke that stream. Documented limitation. |
 | Request resources | New configurable token buckets limit authentication and authenticated mutations; at most ten immediate burst requests. Bodies capped at 16 KiB by default, including chunked input, with a five-second receive deadline. SSE default maximum eight. Global buckets avoid unbounded per-IP state and do not trust forwarded addresses. |
 | Errors and secrets | Safe error envelopes, no-store/nosniff response headers, bounded correlation identifiers, write-only password fields and safe startup/validation exits. Configuration validation does not echo submitted values. Raw database/configuration/log exports are not public APIs. |
-| Browser access | Explicit origins retained. Candidate exposes ETag, X-Correlation-ID and Retry-After; preflight allows correlation headers without bypassing authentication. Backend-held administrator credentials remain recommended. |
+| Browser access | Explicit origins retained. The API exposes ETag, X-Correlation-ID and Retry-After; preflight allows correlation headers without bypassing authentication. Backend-held administrator credentials remain recommended. |
 | State changes | ETag-checked transactions, parameterised SQLite values, explicit registration, serialised adapter work and ownership preserved. PATCH omission no longer clears labels. DELETE/rotation and uncertain-response retries need client confirmation/reconciliation. |
 | Host commands | BlueZ recovery uses a validated registered identity and argument arrays, never shell interpolation/global reset. New read-only host diagnostics use fixed commands, timeouts, cancellation cleanup and locale-independent parsing. Raw output is not exposed. |
-| Telemetry | Candidate honours the physical battery interval, preserves its actual observation time and avoids duplicate cached battery publications. Read failure invalidates its value and retries on the next snapshot. Device loss still invalidates cached readings. |
+| Telemetry | The gateway honours the physical battery interval, preserves its actual observation time and avoids duplicate cached battery publications. Read failure invalidates its value and retries on the next snapshot. Device loss still invalidates cached readings. |
 | Diagnostics | Bluetooth powered state and clock synchronisation are true/false/unknown, cached for 15 seconds. Unknown is not healthy. Readiness remains a broker-readiness check, not a guarantee of fresh probes. |
 | Deployment | Dedicated user, root-owned releases, private state/configuration, lock, exclusive backups and explicit rollback retained. Additional symlink rejection for the releases directory and managed database/configuration/unit files. Same-host backup/rollback, not an automated disaster-recovery mechanism. |
 | Dependencies | Local known-vulnerability query returned no advisories. Python-version/platform inventories and scans run in CI; licences/notice obligations are recorded separately. No external application source was copied or adapted. |
@@ -65,7 +66,7 @@ could read but not publish. Full sanitised results are in
   accuracy. Bluetooth powered=true does not prove successful discovery or GATT reads.
 - Systemd restart supervision has a rate limit. It is not a guarantee against all
   hangs, power loss, radio interference or prolonged failure. A twelve-hour
-  physical soak passed on rc5, but cannot guarantee every future run.
+  physical soak passed, but cannot guarantee every future run.
 - Backups contain secrets; the installer executes trusted source and package builds
   as root. Do not accept arbitrary uploaded archives or backup paths from web users.
 
@@ -78,6 +79,6 @@ configuration conflicts, stale readings, MQTT retry and deployment-state helpers
 Run full lint, format, type, test and Linux CI checks after the final release edit.
 Clean-Pi installation, operating-system permissions and physical two-probe readings
 have passed. This is a historical v0.9.0 snapshot, not a new v1.0.0 security
-certification. The rc5 four-probe comparison and twelve-hour soak passed, while
+certification. The four-probe comparison and twelve-hour soak passed, while
 other v1.0.0 physical checks were waived for publication; see
 [release status](release-status.md).

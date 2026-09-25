@@ -1,17 +1,6 @@
-# Troubleshooting the current managed service
+# Troubleshooting pitblu-core v1.0.0
 
-## Thermometer communication
-
-| Symptom | Interpretation and action |
-|---|---|
-| Connection says polling but communication is stale | The BLE workflow is active but no recognised GATT exchange has succeeded recently. Wait for automatic recovery or use `pitblu-core-config igrill reconnect`. |
-| Heartbeat healthy but no temperatures | Check probe `present`, `available`, and `fresh` separately. No-probe responses and battery reads can prove thermometer communication. |
-| Heartbeat unknown after restart | Expected until the new service session completes initialisation or a validated read. Old session state is not reused. |
-| MQTT heartbeat is retained | Require current service availability, matching `sessionId`, and a recent timestamp before treating it as current. |
-
-Published release: v1.0.0. For plain-English help, start with the
-[cook's quick start](bbq-quick-start.md). These checks concern the installed service,
-not an old milestone proof process.
+For everyday use, start with the [cook's quick start](bbq-quick-start.md).
 
 ## Start with the supported check
 
@@ -40,6 +29,15 @@ after this report.
 | Readings marked simulated | Check simulation.enabled and restart only when safe. Do not use test readings for a cook. |
 | Scan result no longer available | Rescan and explicitly select a fresh discoveryId. Do not guess a Bluetooth address or automatically rebind hardware. |
 | SSE reconnect leaves a gap | Refetch current REST state. There is no historical replay. |
+
+## Understanding the communication heartbeat
+
+| What you see | What it means and what to do |
+| --- | --- |
+| Polling, but communication is stale | The Bluetooth workflow is active, but the iGrill has not answered recently. Allow automatic recovery time, then consider `pitblu-core-config igrill reconnect`. |
+| Healthy heartbeat, but no temperatures | Check whether probes are inserted and readings are fresh. The iGrill can answer even with no probes inserted. |
+| Unknown heartbeat just after restart | Expected until the new service session has a successful exchange with the iGrill. |
+| Retained MQTT heartbeat | Check current service availability, matching `sessionId` and a recent timestamp before treating it as live. |
 
 ## Safe escalation
 

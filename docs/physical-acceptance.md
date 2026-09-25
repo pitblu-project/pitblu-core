@@ -1,100 +1,27 @@
-# Physical acceptance checklist and evidence boundary
+# Physical acceptance checklist
 
-Full physical thermometer-heartbeat acceptance is incomplete. The release owner
-waived the remaining gates for v1.0.0 publication; unrun checks are not passes.
-Automated implementation tests do not prove real V202 behaviour on the Pi. The
-rc5 physical record now includes force
-reconnect during backoff, restart/session changes, retained MQTT interpretation,
-four-inserted-probe comparison and a twelve-hour monitored soak. Connected-but-
-unresponsive ageing remains untested; no candidate has passed the entire v1.0.0 suite.
+v1.0.0 was published with some checks still unverified. The release owner
+waived them for publication; no unrun check is recorded as a pass. The
+[Pi test record](physical-evidence.md) gives the observed results and exact
+test build. The published package still needs its own Pi smoke test.
 
-The [v1.0.0rc1 partial Pi record](physical-candidate-rc1.md) documents successful
-two-probe and absent-probe observations alongside a repeatable manual reconnect
-failure. Later candidates retested that failure.
+| Check | Evidence at publication |
+| --- | --- |
+| Four inserted probes match the iGrill display | Passed on the tested build; all four matched exactly. |
+| Probe removal and no-probe communication | Passed on the tested build; removal observed after 12.5 seconds. |
+| Disconnect/Connect, force reconnect and power-cycle recovery | Passed in targeted physical checks. |
+| REST, SSE, MQTT temperatures, retained state and Last Will | Passed in targeted checks with an authenticated subscriber. |
+| Service, broker, Bluetooth-service and Pi restart recovery | Passed in targeted checks. |
+| Twelve-hour physical monitoring | Passed on the tested build; 7,094 good REST samples and 23,904 temperature messages, with no recorded errors. |
+| Heartbeat ageing while Bluetooth stays connected but stops responding | Not demonstrated. The link disconnected before the heartbeat became stale. |
+| Fresh registration, invalid-value rejection and token rotation on the final build | No complete physical result recorded. |
+| Clean installation, upgrade and rollback of the published v1.0.0 package | Not yet recorded on the Pi. |
 
-The [v1.0.0rc2 partial Pi record](physical-candidate-rc2.md) shows the failure
-persisted after fresh BLE discovery. The Pi was restored to the accepted v0.9.0
-installation while the failure is diagnosed.
+## If you run further checks
 
-The [v1.0.0rc3 partial Pi record](physical-candidate-rc3.md) narrowed the repeated
-failure to BLE connection and GATT service resolution timeout. The Pi was again
-restored to the working v0.9.0 runtime.
-
-The [v1.0.0rc4 partial Pi record](physical-candidate-rc4.md) reports one successful
-force reconnect with polling and fresh communication afterwards. Sustained
-operation and the remaining release gates still require physical checks.
-
-The [v1.0.0rc5 partial Pi record](physical-candidate-rc5.md) reports a successful
-explicit Disconnect → ordinary Connect retest, automatic recovery, physical
-MQTT/Last Will checks, four-probe display comparison and twelve-hour soak.
-The remaining final physical checks stay open despite publication.
-
-The v0.9.0 runtime baseline was accepted as v0.9.0rc1 at revision f3bc114. The
-final v0.9.0 preparation changes metadata and documentation only. The full v1.0.0
-physical suite is **not complete**. The four-probe comparison and minimum
-twelve-hour soak passed later on rc5; see [candidate evidence](physical-candidate-rc5.md).
-
-## Clean-Pi v0.9.0 evidence: recorded 10 September 2026
-
-Clean installation at exact commit
-`f3bc11488e72b966676c0f3a1844ea218259ab90` passed on a fresh Raspberry Pi OS
-Lite 64-bit Trixie system. REST-only onboarding and connection, two available
-probe/display comparisons at 0.0°C delta, absent-probe state, battery cadence,
-SSE, MQTT security and payload behaviour, restart and reboot recovery, backup,
-same-version upgrade/rollback and non-destructive uninstall/restoration all passed.
-See the [clean-Pi record](clean-pi-acceptance.md) for the sanitised results.
-
-## Candidate evidence: 8 September 2026
-
-- Pi Python 3.13.5: 114 tests pass, 93.79% coverage; the preceding lint, format
-  and strict typing checks completed successfully in the operator's command chain.
-- Migration preserved the original administrator token and registered device state.
-- Physical probes 1 and 2 returned fresh 19 degrees Celsius readings; channels 3
-  and 4 reported absent; battery returned 50%. Display comparison remains unconfirmed.
-- MQTT authenticated as pitblu-core and delivered retained service availability
-  and non-retained physical temperatures on pitblu topics, all QoS 1.
-- Reboot restored service, MQTT and physical polling automatically, NRestarts=0.
-  Readiness returned 200; Bluetooth power and clock synchronisation reported true.
-- A verified protected backup was created after migration and reboot acceptance.
-
-These are historical operator-supplied results from the earlier existing-OS
-migration. They remain useful evidence but are superseded for the v0.9.0
-clean-install gate by the record above. Neither record constitutes four-inserted-
-probe acceptance, independent penetration testing or a twelve-hour soak.
-
-## Historical v0.9.0 gate
-
-The v0.9.0 clean-Pi gate passed. Its evidence does not validate v1.0.0.
-
-## v1.0.0 physical checklist (remaining items waived for publication)
-
-Record the exact revision and environment for any follow-up. The rc5 evidence
-closes some items, but missing final-candidate evidence must remain unverified.
-
-- Discover the V202 within 20 seconds and register/connect through REST.
-- Resolve expected Weber services and read all four inserted probe channels.
-- Match each display within 1 degree Celsius; detect removal within 15 seconds;
-  read battery; reject invalid/sentinel values.
-- Mark stale data and publish service/device/probe availability correctly.
-- Recover from iGrill power cycling, temporary Bluetooth failure, broker restart
-  and Pi reboot without manual service restart.
-- Verify REST operations, SSE, MQTT payloads/Last Will, configuration persistence,
-  authentication, token rotation and secret redaction.
-- Verify clean native installation, automatic startup, graceful shutdown, upgrade
-  and rollback, with migration limitations stated explicitly.
-- Pass supported-Python CI and complete documentation/provenance/licence reviews.
-- Complete at least twelve hours of physical monitoring without manual intervention;
-  record sample freshness, MQTT receipt, telemetry gaps, interruptions and automatic
-  recovery. Review every gap; merely leaving the process running is not a pass.
-
-## Safe test procedure and evidence
-
-Arrange disruptive checks outside an active cook. Close competing thermometer apps
-and run only one gateway against the physical device. Keep independent temperature
-checks. Use small related batches of Pi commands and review results before proceeding.
-Stop at hardware decisions requiring operator input.
-
-Record dates, revision, OS/Python/BlueZ versions, steps, expected and actual outcomes,
-manual display comparisons, timing and recovery details. Omit private addresses,
-credentials and raw databases. Distinguish simulation from physical evidence.
-A failed or unrun check stays failed or pending; a healthy endpoint alone is not a pass.
+Schedule disruptive checks outside an active cook. Close other apps connected to
+the iGrill and run only one gateway. Record the exact Git revision, Pi OS and
+Python version, what you did, what the iGrill displayed and what the gateway
+reported. Keep passwords, Bluetooth addresses, private network details and
+raw databases out of shared logs. A healthy service alone does not prove that
+physical readings are current. Continue independent temperature checks.

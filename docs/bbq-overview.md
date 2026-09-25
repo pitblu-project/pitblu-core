@@ -1,10 +1,5 @@
 # Pitblu, in plain English
 
-The support check distinguishes a running helper from a thermometer that is actually answering.
-A thermometer can be connected with no probes inserted and still communicate normally. If it
-stops answering, automatic recovery remains responsible for retries; an operator can also choose
-**Force reconnect now**.
-
 ## What is it?
 
 Think of `pitblu-core` as a helper sitting beside your barbecue. It runs on a
@@ -24,23 +19,24 @@ thermometer and not a controller for your barbecue.
 - Start automatically when a properly installed Pi starts.
 - Share live readings with a separate application.
 
-The current release is v1.0.0. The four-probe display comparison and twelve-hour
-soak passed on rc5, but the release owner waived other incomplete physical checks.
+The current release is v1.0.0. Four probes matched the iGrill display in a
+physical test, and a twelve-hour monitored run completed without recorded
+errors. The release owner waived other incomplete physical checks.
 Read the [release status](release-status.md) before relying on the gateway for an
 unattended cook. Continue independent temperature checks.
 
 ## What will I see on my phone?
 
-There is no friendly phone or web dashboard in this project yet. This is the
-behind-the-scenes part that a separate web application will use.
+There is no phone or web dashboard in pitblu-core. This is the
+behind-the-scenes part used by the separate web application.
 
-A future application could show graphs, organise cooks, label probes as “brisket”
+An application can show graphs, organise cooks, label probes as “brisket”
 or “barbecue”, and provide alarms. Those features are not provided by
 `pitblu-core` today. It does not keep your temperature history, send notifications,
 control the heat, or tell you that food is safely cooked.
 
-Until a separate application is available, a technical helper can check readings
-on the Pi. The [quick-start guide](bbq-quick-start.md) includes an optional check.
+You can check readings on the Pi with the guided support command. The
+[quick-start guide](bbq-quick-start.md) shows how.
 
 ## What do the technical words mean?
 
@@ -80,7 +76,7 @@ the last number as an old reading, not proof that the temperature has stayed the
 same. Check the thermometer directly when in doubt.
 
 Keep your usual checks and an independent way to measure temperature. This is
-development-stage monitoring software, not a replacement for food-safety checks
+monitoring software, not a replacement for food-safety checks
 or an unattended-cooking safety system. Do not rely on an alarm from this project:
 it does not provide one.
 

@@ -37,11 +37,14 @@ gateway installer deliberately does not install or configure Mosquitto.
 
 ## Clean installation versus restoration
 
-For clean-Pi acceptance, bootstrap a new token and register the thermometer through
-REST. Do not restore old application state/configuration as part of that test.
-Configure the broker independently and verify physical MQTT delivery. Keep recovery
-backups untouched. Complete the [clean-Pi procedure](clean-pi-acceptance.md) and
-record failures as well as successes before declaring the gate passed.
+For a genuinely fresh installation, follow the current
+[installation guide](installation.md), save the new administrator token and
+register the iGrill through guided configuration. Do not restore old state as
+part of a clean-install test. Configure an optional broker independently and
+verify physical readings before relying on them. Keep recovery backups
+untouched and record failures as well as successes. The
+[older clean-Pi record](clean-pi-acceptance.md) is historical evidence, not
+instructions for v1.0.0.
 
 A full image restoration is a recovery option, not evidence of a clean installation.
 Do not operate two gateway instances against the same thermometer.

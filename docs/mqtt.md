@@ -1,19 +1,5 @@
 # MQTT
 
-## Thermometer heartbeat topic
-
-`{baseTopic}/v1/devices/{deviceId}/heartbeat` is retained at QoS 1. It carries the standard
-schema version, observation time, sequence, source, session and device fields plus `status`,
-nullable `lastSuccessfulCommunicationAt`, `fresh` and `staleAfterSeconds`. Publications occur
-for real communication success and unknown/stale/disconnected transitions, not from the MQTT
-service heartbeat timer.
-
-On service startup an unknown heartbeat in the new session replaces old retained device state.
-Subscribers must nevertheless require retained service availability to be online, reject a
-heartbeat from another session, and check its timestamp. Last Will/service availability proves
-the publisher process; thermometer heartbeat proves the registered thermometer answered. See
-[the complete heartbeat contract](thermometer-heartbeat.md).
-
 See the [frontend integration guide](frontend-integration.md) for every payload type,
 SSE differences and subscriber reconciliation rules. In particular, service
 availability reuses sequence values and must not use device-telemetry deduplication.
@@ -35,6 +21,7 @@ With the default `pitblu` base topic:
 | `pitblu/v1/service/availability` | Yes, with Last Will |
 | `pitblu/v1/devices/{deviceId}/availability` | Yes |
 | `pitblu/v1/devices/{deviceId}/connection` | Yes |
+| `pitblu/v1/devices/{deviceId}/heartbeat` | Yes |
 | `pitblu/v1/devices/{deviceId}/battery` | Yes |
 | `pitblu/v1/devices/{deviceId}/probes/{probe}/availability` | Yes |
 | `pitblu/v1/devices/{deviceId}/probes/{probe}/temperature` | No |
@@ -87,6 +74,20 @@ snapshot arrives before `polling.stale_after`, device and probe availability eve
 `available: false` with reason `stale`; REST suppresses the old numeric values.
 The retained battery state is also invalidated with a null percentage. Explicit disconnect
 invalidates available state immediately.
+
+## Thermometer heartbeat topic
+
+`{baseTopic}/v1/devices/{deviceId}/heartbeat` is retained at QoS 1. It carries the standard
+schema version, observation time, sequence, source, session and device fields plus `status`,
+nullable `lastSuccessfulCommunicationAt`, `fresh` and `staleAfterSeconds`. Publications occur
+for real communication success and unknown/stale/disconnected transitions, not from the MQTT
+service heartbeat timer.
+
+On service startup an unknown heartbeat in the new session replaces old retained device state.
+Subscribers must nevertheless require retained service availability to be online, reject a
+heartbeat from another session, and check its timestamp. Last Will/service availability proves
+the publisher process; thermometer heartbeat proves the registered thermometer answered. See
+[the complete heartbeat contract](thermometer-heartbeat.md).
 
 Do not put credentials in YAML, shell history or source control. Configure `mqtt.password` through
 the authenticated write-only secret endpoint. Additional consumers should use separate

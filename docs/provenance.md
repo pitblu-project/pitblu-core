@@ -52,7 +52,7 @@ no Bluetooth address or personal network configuration.
 The fixture records those bytes in `pitblu-core/tests/fixtures/v202/physical-proof.json` and replays them
 through the clean-room protocol decoder. The production adapter, state machine, discovery
 supervisor and simulator are original project code. No additional external source or dependency
-was introduced for this milestone.
+was introduced for this work.
 
 ## Resilience provenance
 

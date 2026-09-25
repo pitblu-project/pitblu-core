@@ -1,7 +1,7 @@
 # pitblu-core integration contract for pitblu-app
 
-Contract: **v1.0.0**. The rc5 four-probe display comparison and twelve-hour soak
-passed on the target Pi. Other final physical checks were waived for publication;
+Contract: **v1.0.0**. A four-probe display comparison and twelve-hour soak
+passed on the target Pi. Other physical checks were waived for publication;
 the stable tag has not yet been smoke-tested on the Pi. See [release status](release-status.md).
 
 ## 1. Purpose and architecture
@@ -522,5 +522,5 @@ and [physical acceptance](physical-acceptance.md).
 
 When changing a route, request/response field, event, topic, authentication behaviour
 or configuration setting, update this guide in the same change. Do not silently
-turn implementation gaps into promises. Keep candidate behaviour and pending
+turn implementation gaps into promises. Keep observed behaviour and pending
 physical acceptance distinct.

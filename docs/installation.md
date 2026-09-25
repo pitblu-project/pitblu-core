@@ -1,126 +1,119 @@
-# Native installation
+# Install pitblu-core v1.0.0 on a Raspberry Pi
 
-The guided commands described here ship in v1.0.0, building on the historical
-v0.9.0 native deployment. Check [release status](release-status.md) for the
-physical acceptance limitations before upgrading.
-Read [migration](rename-migration.md) before changing an existing deployment.
+This guide is for Raspberry Pi OS/Debian 13 (Trixie), 64-bit ARM, with Python
+3.13, systemd and a powered Bluetooth controller. Use the Pi terminal or an
+interactive SSH session. Do not install or upgrade during a cook.
 
-Target: Raspberry Pi OS Trixie, 64-bit ARM, Python 3.13, systemd and BlueZ. Docker is not used.
-Clean installation and reboot recovery passed on this target. Do not install during
-an active cook.
+If pitblu-core is **already installed**, use [Upgrade an existing installation](#upgrade-an-existing-installation)
+below. If a different gateway or service is installed, read
+[migration](rename-migration.md) first. Do not run two gateways against the
+same iGrill.
 
-## Before installing
+## Get the v1.0.0 source
 
-These are fresh-install instructions. For an existing managed installation, use
-[upgrade and rollback](upgrade-and-rollback.md) instead; do not reinstall over it.
-If migrating from an experimental setup, preserve its files as a separate fallback
-and stop its process before connecting the managed service. Never run two instances
-against the same thermometer or terminate arbitrary Python processes.
-
-Install Git to obtain the reviewed source from GitHub. The guided installer checks and classifies
-all other packages, explains missing required dependencies and asks before installing them. The
-default response is No.
+If Git is not installed, install it first:
 
 ```bash
 sudo apt-get update
 sudo apt-get install git
 ```
 
-Clone the public component repository. Check out the reviewed release tag or full
-commit, verify it, and install from the repository root:
+Then get the published version in a new directory:
 
 ```bash
-git clone https://github.com/pitblu-project/pitblu-core.git
-cd pitblu-core
-git checkout --detach REPLACE_WITH_REVIEWED_TAG_OR_FULL_COMMIT
+git clone --branch v1.0.0 --depth 1 https://github.com/pitblu-project/pitblu-core.git pitblu-core-v1.0.0
+cd pitblu-core-v1.0.0
 git rev-parse HEAD
-git status --short
-./pitblu-core-install
+./pitblu-core-install check
 ```
 
-Do not place GitHub tokens in command arguments or shell history. A source archive
-from the same reviewed GitHub revision remains valid for offline recovery, but
-GitHub is the normal source of release truth.
+The check reports supported hardware, Python, required packages and Bluetooth
+state without changing the installation. If the directory already exists,
+choose another empty directory rather than overwriting it. A detached Git
+checkout of a release tag is normal.
 
-Use `./pitblu-core-install check` for a non-mutating prerequisite report. Required packages are
-labelled runtime/install or deployment. `curl` is optional and `mosquitto-clients` is
-acceptance/test-only. Mosquitto and `mosquitto-clients` are optional broker and acceptance packages,
-not pitblu-core runtime prerequisites. The gateway can operate with MQTT disabled.
-When MQTT is required, provision an authenticated local, remote or hosted broker
-separately.
+## New installation
 
-The guided command remains unprivileged and explains each escalation. It delegates the actual
-deployment to `deploy/manage.sh`, which creates a system account `pitblu-core` with no login shell,
-adds it to the existing
-`bluetooth` group, creates a new permanent virtual environment in a versioned release directory,
-and installs the package there. It requires package-index access. Application source is trusted
-code: review it before running the installer as root. It does not modify Mosquitto configuration.
-
-Save the one-time administrator token in a password manager. Do not paste it into chat, command
-arguments or logs. The installer refuses redirected output; SQLite stores only a salted scrypt
-hash. On ordinary service startup, a missing token or disabled authentication causes failure,
-never token generation into journald. Initial settings are loopback, port 8080, token authentication,
-physical BLE and MQTT disabled. Configure MQTT through the API after onboarding.
-
-The installer offers to enable/start the service and then verifies service state, installed version,
-health and Bluetooth. If starting was declined, start explicitly when ready:
+After the prerequisite check succeeds, run:
 
 ```bash
-sudo systemctl enable --now pitblu-core
-systemctl is-active pitblu-core
-curl --fail http://127.0.0.1:8080/health
+./pitblu-core-install install
 ```
 
-The service deliberately does not connect to unregistered devices. Run `pitblu-core-config igrill`
-or use the guided menu to register it. `pitblu-core-config check` is the canonical verification and
-support command. The low-level REST
-[onboarding workflow](frontend-integration.md#4-discovery-registration-and-connection-workflow)
-remains available to integration developers.
-Existing databases are not imported automatically. Configure secrets through the
-write-only API over loopback. Token rotation is
-authenticated through the existing API. A lost initial token requires a planned local recovery,
-not deleting the production database.
+Read each prompt. The installer explains any missing packages and asks before
+installing them. It then asks for `sudo` only for the system changes it needs.
+Allow it to enable and start the service if you want it to run now and after
+reboot. It checks service state, installed version, local health and Bluetooth
+when finished.
 
-## Files and privileges
+The administrator token appears **once**. Save it in a password manager at
+that moment. Do not paste it into chat, a command, a screenshot or a log.
+Do not delete the database to recover a lost token; use a planned local
+recovery procedure.
 
-- `/opt/pitblu-core/releases/release-*/venv`: root-owned installed code, readable but not writable
-  by the service. Virtual environments never move; `/opt/pitblu-core/current` selects one.
-- `/etc/pitblu-core/config.yaml`: root-owned non-secret startup configuration, mode 0640.
-- `/etc/pitblu-core/environment`: root-owned optional systemd environment file, mode 0640.
-- `/var/lib/pitblu-core/state.sqlite3`: service-owned administrative state, directory 0700,
-  new files masked 0077. This includes the protected MQTT password; backups are secrets too.
-- `/var/backups/pitblu-core`: root-only backups, retained until explicitly managed by the operator.
+The installer may offer to open guided configuration. Choose Yes, or run this
+later:
 
-`PITBLU_CONFIG_FILE` selects YAML startup configuration. `PITBLU_DATABASE_PATH` selects SQLite.
-`PITBLU_MANAGED=true` enables the service authentication guard. These startup controls are not
-runtime configuration values. Persisted API overrides take precedence over YAML/environment.
+```bash
+pitblu-core-config igrill
+```
 
-The unit uses a read-only system filesystem, protected home directories, no added capabilities,
-no privilege escalation and a private temporary directory. It allows local D-Bus plus IPv4/IPv6
-and Bluetooth socket families. Bluetooth is accessed through BlueZ, not by granting root to the
-gateway. Confirm the distribution's Bluetooth group access works; do not install broad D-Bus or
-polkit exceptions without diagnosing an actual permission failure.
+Turn on the iGrill, choose it from the scan, register it and connect. The
+service does not automatically connect to a nearby, unregistered device.
+MQTT is optional and starts disabled. If you want it, first set up an
+authenticated broker, then use `pitblu-core-config mqtt`. The gateway
+installer does not install or configure Mosquitto.
 
-## Operation
+## Upgrade an existing installation
+
+Use a fresh v1.0.0 checkout following the source steps above.
+Check the host and keep the existing protected backup. Then run:
+
+```bash
+./pitblu-core-install upgrade
+```
+
+The upgrade makes a protected backup before switching releases. Review the
+post-install checks and use [backup and rollback](upgrade-and-rollback.md) if
+the service or physical readings do not recover. Do not discard an older
+working release or backup until the new installation is verified.
+
+## Verify readings
+
+Run the guided support check:
 
 ```bash
 pitblu-core-config check
-systemctl status pitblu-core --no-pager
-sudo journalctl -u pitblu-core -n 50 --no-pager
-sudo systemctl restart pitblu-core
 ```
 
-Restart interrupts readings. `Restart=on-failure` restarts a failed process after five seconds;
-five rapid starts in a minute trigger a limit rather than an endless failure loop. After correcting
-configuration, use `sudo systemctl reset-failed pitblu-core` then start it. Stopping the service
-explicitly does not restart it. Shutdown has 45 seconds to drain HTTP, BLE and MQTT before systemd
-terminates remaining processes. No automatic upgrades occur.
+Enter the administrator token at the hidden prompt. Look for version
+`1.0.0`, an active service, healthy local API, a connected/polling iGrill,
+recent communication and fresh **physical** probe readings. Compare the
+temperatures with the iGrill display. A healthy API alone does not prove
+Bluetooth readings are reaching the Pi. A socket with no probe inserted
+should be shown as absent, not as a live temperature.
 
-For trusted-LAN use, explicitly configure bind `0.0.0.0` with token authentication; plain HTTP is
-trusted-LAN only. Never expose the API directly to the internet. The installer makes no firewall
-changes. Validate reboot startup, BLE recovery and MQTT reception before relying on the service.
+If the check reports a failure, follow [troubleshooting](troubleshooting.md).
+The [release status](release-status.md) describes physical checks that had not
+been completed when v1.0.0 was published. Continue independent temperature
+checks during a cook.
 
-For normal installation and configuration examples, rerun and recovery guidance, dependency groups
-and credential handling, see [guided terminal tools](terminal-tools.md). Direct
-`sudo bash deploy/manage.sh ACTION` commands are the expert/recovery interface, not the normal first
-installation path.
+## What the installer changes
+
+The guided installer creates a dedicated `pitblu-core` service account,
+a versioned Python environment under `/opt/pitblu-core/releases`, a protected
+SQLite database under `/var/lib/pitblu-core`, configuration under
+`/etc/pitblu-core`, and a systemd service. It uses a deployment lock and
+retains backups in `/var/backups/pitblu-core`. Source and configuration are
+root-owned; the service runs without root privileges. Package-index access is
+required, but Docker is not.
+
+The default API listens only on `127.0.0.1:8080` with token authentication.
+Only use a network-facing bind address on a trusted LAN with appropriate
+controls. Never expose the API or an unauthenticated MQTT broker directly to
+the internet. No automatic software upgrades or firewall changes are made.
+
+For normal setup and diagnostic options, see [guided terminal tools](terminal-tools.md).
+For expert backup, rollback and uninstall operations, see
+[backup and rollback](upgrade-and-rollback.md). Existing databases are not
+imported automatically when moving from a differently named deployment.

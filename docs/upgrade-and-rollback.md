@@ -1,13 +1,13 @@
 # Backup, upgrade, rollback and uninstall
 
-These commands assume the new application identity is already installed. A deployment
-with a different identity requires [controlled migration](rename-migration.md) first.
-Run the normal guided upgrade from a reviewed GitHub checkout with
-`./pitblu-core-install upgrade`. Expert/recovery commands below run from the repository's
-`pitblu-core/` directory.
+For a normal v1.0.0 upgrade, follow the
+[installation guide's upgrade steps](installation.md#upgrade-an-existing-installation).
+The commands below are for backup, rollback, uninstall and expert recovery. A
+deployment with a different service identity requires
+[controlled migration](rename-migration.md) first.
 
 The v0.9.0 clean-install, upgrade, rollback and reboot-recovery checks passed on the Pi.
-Rc5 upgrade and recovery checks are in the [physical record](physical-candidate-rc5.md).
+Further upgrade and recovery checks are in the [Pi test record](physical-evidence.md).
 The stable v1.0.0 tag has not itself been smoke-tested on the Pi at publication.
 Never upgrade during a cook.
 All operations use a deployment lock and fixed production roots. The home-directory test installation
@@ -27,7 +27,9 @@ The selected application release must remain present for rollback; also retain i
 
 ## Upgrade
 
-Unpack the new source release into a separate directory. Then run from that directory:
+The guided installer is the normal upgrade path. For an expert-controlled
+upgrade, obtain the v1.0.0 source as described in the installation guide and
+run this from that checkout:
 
 ```bash
 sudo bash deploy/manage.sh upgrade
