@@ -32,5 +32,5 @@ See [release status](docs/release-status.md) and the
   and non-destructive uninstall.
 - Passed the historical clean-Pi checks at commit
   `f3bc11488e72b966676c0f3a1844ea218259ab90fd`, including two physical
-  probes, SSE, MQTT and reboot recovery. See the
-  [historical record](docs/clean-pi-acceptance.md).
+  probes, SSE, MQTT and reboot recovery. This is historical evidence, not
+  v1.0.0 acceptance.

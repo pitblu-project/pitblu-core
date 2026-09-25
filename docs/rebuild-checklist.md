@@ -42,9 +42,8 @@ For a genuinely fresh installation, follow the current
 register the iGrill through guided configuration. Do not restore old state as
 part of a clean-install test. Configure an optional broker independently and
 verify physical readings before relying on them. Keep recovery backups
-untouched and record failures as well as successes. The
-[older clean-Pi record](clean-pi-acceptance.md) is historical evidence, not
-instructions for v1.0.0.
+untouched and record failures as well as successes. Use the current
+[physical acceptance checklist](physical-acceptance.md) to record the result.
 
 A full image restoration is a recovery option, not evidence of a clean installation.
 Do not operate two gateway instances against the same thermometer.

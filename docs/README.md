@@ -36,8 +36,8 @@ Git tags and releases identify published versions.
 - [v1.0.0 release notes](v1.0.0-release-notes.md) and [release status](release-status.md)
 - [Physical acceptance checklist](physical-acceptance.md)
 - [Pi and iGrill test evidence](physical-evidence.md)
-- [Security policy](../SECURITY.md) and [historical security review and limits](security-review.md)
-- [Dependency audit](dependency-audit.md) and [historical clean-Pi evidence](clean-pi-acceptance.md)
+- [Security policy and operating limits](../SECURITY.md)
+- [Dated dependency audit](dependency-audit.md)
 - [Changelog](../CHANGELOG.md), v0.9.0 onward
 - [Provenance](provenance.md), [third-party notices](../THIRD_PARTY_NOTICES.md), [licence](../LICENSE)
 - Decisions: [hardware-first](adr/0001-incremental-hardware-first.md),
