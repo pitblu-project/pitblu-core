@@ -19,11 +19,7 @@ thermometer and not a controller for your barbecue.
 - Start automatically when a properly installed Pi starts.
 - Share live readings with a separate application.
 
-The current release is v1.0.0. Four probes matched the iGrill display in a
-physical test, and a twelve-hour monitored run completed without recorded
-errors. The release owner waived other incomplete physical checks.
-Read the [release status](release-status.md) before relying on the gateway for an
-unattended cook. Continue independent temperature checks.
+The current release is v1.0.0. 
 
 ## What will I see on my phone?
 
