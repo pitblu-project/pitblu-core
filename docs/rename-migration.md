@@ -1,6 +1,6 @@
 # Moving an existing installation to pitblu-core
 
-Status: candidate migration, authentication, physical MQTT delivery and reboot
+Status: migration, authentication, physical MQTT delivery and reboot
 recovery passed on 8 September 2026. The operator's running service is pitblu-core.
 The checklist below is guidance for another deployment, not outstanding commands
 for that already migrated Pi. Never run an ordinary upgrade across different identities.
@@ -27,7 +27,7 @@ not defaults: they will not automatically change when copied to the new deployme
    deployment until the replacement passes acceptance.
 3. Stop the identified service and confirm its process and listener have stopped.
    Never run two gateway instances against the same thermometer or database.
-4. Install the new candidate under its new account and paths. Recreate the virtual
+4. Install the new service under its new account and paths. Recreate the virtual
    environment rather than moving it: executable launchers contain absolute paths.
 5. Restore administrative state using a validated SQLite snapshot, preserving token
    hashes, registrations and desired state. Set ownership to the new service account

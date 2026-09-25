@@ -1,13 +1,7 @@
 # Quick start for a cook
 
-Run `pitblu-core-config check` when diagnosing a cook. The **Communication** line says when the
-iGrill last answered successfully; it is different from service health and individual probe
-freshness. If it is stale, normally wait for automatic recovery. To request an immediate attempt,
-run `pitblu-core-config igrill reconnect`; the command waits for the operation and verifies the
-refreshed thermometer state.
-
-This guide is for v1.0.0. There is no phone-friendly dashboard
-yet. Start with [the plain-English overview](bbq-overview.md) if you are new to the
+This guide is for v1.0.0. Pitblu-core itself has no phone dashboard. Start
+with [the plain-English overview](bbq-overview.md) if you are new to the
 project.
 
 ## First time only
@@ -51,6 +45,10 @@ pitblu-core-config check
 Enter your administrator token when asked; nothing appears as you type. That is normal. The check
 does not change settings. It reports the service version and health, thermometer connection, fresh
 probe readings, battery and optional MQTT state without showing tokens or Bluetooth addresses.
+The **Communication** line says when the iGrill last answered; it is more
+specific than service health. If it is stale, allow automatic recovery time.
+An operator can request an immediate attempt with
+`pitblu-core-config igrill reconnect` when needed.
 
 This assumes the standard local port. If it was changed, use
 `pitblu-core-config --port PORT check`. Run it again for a new snapshot; the printed numbers do not
@@ -80,7 +78,7 @@ investigate. Tell them when it stopped and what the iGrill display shows, but do
 not send passwords, access tokens or unreviewed logs.
 
 There are no built-in alerts, cooking targets or temperature-history graphs.
-The minimum twelve-hour physical reliability test passed on rc5, but the full
+The minimum twelve-hour physical reliability test passed, but the full
 physical suite remains incomplete by release-owner waiver. A soak is not a guarantee for every
 overnight cook. Keep independent temperature checks.
 

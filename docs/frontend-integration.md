@@ -1,7 +1,7 @@
 # pitblu-core integration contract for pitblu-app
 
-Contract: **v1.0.0**. The rc5 four-probe display comparison and twelve-hour soak
-passed on the target Pi. Other final physical checks were waived for publication;
+Contract: **v1.0.0**. A four-probe display comparison and twelve-hour soak
+passed on the target Pi. Other physical checks were waived for publication;
 the stable tag has not yet been smoke-tested on the Pi. See [release status](release-status.md).
 
 ## 1. Purpose and architecture
@@ -87,11 +87,6 @@ request bodies with `Content-Type: application/json`; unknown model fields are r
 | `POST /api/v1/devices/{deviceId}/connect` | No body; 202 operation. |
 | `POST /api/v1/devices/{deviceId}/disconnect` | No body; 202 operation. |
 | `POST /api/v1/devices/{deviceId}/reconnect` | No body; 202 operation; bypasses recovery backoff. |
-
-Device representations also contain a `heartbeat` object with `status`, nullable
-`lastSuccessfulCommunicationAt`, `fresh`, `staleAfterSeconds`, `sequence`, nullable `source`,
-and `sessionId`. Do not infer it from `observedState` or probe freshness. Calculate display age
-from the timestamp; after a session change treat it as unknown until new evidence arrives.
 | `GET /api/v1/devices/{deviceId}/probes` | Probe array, or `[]` before the first snapshot. |
 | `GET /api/v1/devices/{deviceId}/battery` | Battery object, or JSON `null` before the first snapshot. |
 | `GET /api/v1/operations` | Bounded array of recent persistent operations. |
@@ -106,6 +101,11 @@ from the timestamp; after a session change treat it as unknown until new evidenc
 | `PUT /api/v1/config/secrets/mqtt.password` | `{"value":"<secret>"}`; returns name, configured=true, changedAt. |
 | `DELETE /api/v1/config/secrets/mqtt.password` | No body; returns name, configured=false, changedAt=null. |
 | `POST /api/v1/auth/token/rotate` | No body; returns replacement token once. |
+
+Device representations also contain a `heartbeat` object with `status`, nullable
+`lastSuccessfulCommunicationAt`, `fresh`, `staleAfterSeconds`, `sequence`, nullable `source`,
+and `sessionId`. Do not infer it from `observedState` or probe freshness. Calculate display age
+from the timestamp; after a session change treat it as unknown until new evidence arrives.
 
 There are no pagination parameters, filtering endpoints, operation-cancellation
 endpoint, service-restart endpoint, firmware-update endpoint or history-query API.
@@ -282,6 +282,7 @@ sequence, source, deviceId, probe and data. Non-applicable deviceId/probe can be
 | `service.availability` | `available` boolean. |
 | `device.availability` | `available`, optional `reason` such as stale/disconnected. |
 | `device.connection` | `state`. |
+| `thermometer.heartbeat` | `status`, nullable `lastSuccessfulCommunicationAt`, `fresh`, `staleAfterSeconds`. This is device communication, not an idle SSE comment. |
 | `device.battery` | `available`, `percentage`, optional `reason`. |
 | `probe.availability` | `available`, `present`, optional `reason`. |
 | `probe.temperature` | `temperatureC`. |
@@ -313,6 +314,7 @@ version are independent. Subscribe with QoS 1 for the gateway's QoS 1 publicatio
 | `B/v1/service/availability` | Yes, Last Will | `available` |
 | `B/v1/devices/{deviceId}/availability` | Yes | `available`, optional `reason` |
 | `B/v1/devices/{deviceId}/connection` | Yes | `state` |
+| `B/v1/devices/{deviceId}/heartbeat` | Yes | `status`, nullable `lastSuccessfulCommunicationAt`, `fresh`, `staleAfterSeconds` |
 | `B/v1/devices/{deviceId}/battery` | Yes | `available`, `percentage`, optional `reason` |
 | `B/v1/devices/{deviceId}/probes/{probe}/availability` | Yes | `available`, `present`, optional `reason` |
 | `B/v1/devices/{deviceId}/probes/{probe}/temperature` | No | `temperatureC` |
@@ -522,5 +524,5 @@ and [physical acceptance](physical-acceptance.md).
 
 When changing a route, request/response field, event, topic, authentication behaviour
 or configuration setting, update this guide in the same change. Do not silently
-turn implementation gaps into promises. Keep candidate behaviour and pending
+turn implementation gaps into promises. Keep observed behaviour and pending
 physical acceptance distinct.

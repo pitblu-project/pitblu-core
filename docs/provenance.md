@@ -14,32 +14,15 @@ sources.
 
 ## Dependencies
 
-| Dependency | Version | Licence | Purpose |
-| --- | --- | --- | --- |
-| aiomqtt | 2.5.1 | BSD-3-Clause, copyright 2020 SBT Instruments | Async MQTT client facade. |
-| Bleak | 3.0.2 | MIT | Async BLE discovery and GATT client. |
-| FastAPI | 0.141.1 | MIT | REST API, OpenAPI generation and request validation. |
-| PyYAML | 6.0.3 | MIT | Safe parsing of optional startup configuration. |
-| Uvicorn | 0.52.4 | BSD-3-Clause | Native ASGI server. |
-| Hatchling | 1.32.0 | MIT | Build backend only. |
-| HTTPX2 | 2.12.0 | BSD-3-Clause | Development-only API contract client. |
-| types-PyYAML | 6.0.12.20260815 | Apache-2.0 | Development-only static type information. |
-| pytest | 9.1.1 | MIT | Development tests only. |
-| pytest-cov | 7.1.0 | MIT | Development coverage checks only. |
-| Ruff | 0.16.6 | MIT | Development formatting and linting only. |
-| mypy | 2.3.1 | MIT | Development type checking only. |
+The pinned v1.0.0 runtime, development and build dependencies are declared in
+[pyproject.toml](../pyproject.toml). The [dependency and licence audit](dependency-audit.md)
+records the dated licence review and explains how to obtain resolved-environment
+inventories from CI. This provenance page does not repeat an exact-version
+table that could become stale when the declarations change.
 
-aiomqtt installs Eclipse Paho MQTT Python 2.1.0 as its transport dependency. Paho declares
-`EPL-2.0 OR BSD-3-Clause`; this project relies on the BSD-3-Clause option. No aiomqtt or Paho source
-was copied or adapted.
-
-Dependency licences were reviewed from their project metadata or licence distributions. For the
-v0.9.0 clean-Pi gate, the dependency inventory was generated on Linux/aarch64 with Python 3.13.5
-using `pitblu-core/scripts/dependency_inventory.py` after installing the pinned Hatchling 1.32.0
-build requirement. The valid JSON was checked for home and managed-state paths, authorisation
-values, bearer tokens and password strings; none were found. This resolved-environment output
-remains generated evidence rather than tracked source. CI produces and retains the normal
-inventories for every supported Python version.
+The original audit found that aiomqtt uses Eclipse Paho MQTT Python as a
+transport dependency. Paho offers `EPL-2.0 OR BSD-3-Clause`; this project
+uses the BSD-3-Clause option. No aiomqtt or Paho source was copied or adapted.
 
 ## Direct physical protocol evidence
 
@@ -52,7 +35,7 @@ no Bluetooth address or personal network configuration.
 The fixture records those bytes in `pitblu-core/tests/fixtures/v202/physical-proof.json` and replays them
 through the clean-room protocol decoder. The production adapter, state machine, discovery
 supervisor and simulator are original project code. No additional external source or dependency
-was introduced for this milestone.
+was introduced for this work.
 
 ## Resilience provenance
 

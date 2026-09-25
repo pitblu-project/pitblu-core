@@ -1,97 +1,36 @@
 # Changelog
 
-This file is the canonical human-readable version history. Git tags and GitHub
-releases identify published revisions.
+Git tags and GitHub releases identify the published versions. This file
+summarises changes that matter to users.
 
 ## [1.0.0] - 2026-09-25
 
-- Published the guided install/configuration tools and thermometer communication
-  heartbeat first introduced in rc1, with the reconnect corrections through rc5.
-- The rc5 Pi record confirms explicit Disconnect/Connect, force reconnect,
-  automatic recovery, four physical probes matching the display, MQTT/SSE
-  telemetry and a twelve-hour monitored soak with no recorded anomalies.
-- The release owner directed publication with the remaining final physical
-  acceptance gates waived. Connected-but-unresponsive heartbeat ageing and
-  other unrecorded checklist items are **not** claimed as passed. The stable
-  package has not yet been independently smoke-tested on the Pi.
+- Added guided `pitblu-core-install` and `pitblu-core-config` commands for
+  installation, setup and support checks.
+- Added a thermometer communication heartbeat to REST, SSE and MQTT, plus an
+  operator-requested force reconnect.
+- Improved reconnection by refreshing device discovery, releasing leftover
+  BlueZ connections and allowing more time for BLE connection and GATT
+  service resolution. Diagnostics report safe failure details without
+  exposing device identity or credentials.
+- Physical testing showed four probes matching the iGrill display, successful
+  targeted recovery and a twelve-hour monitored run without recorded errors.
 
+The owner published v1.0.0 with some physical checks waived, not passed. The
+published package had not itself been smoke-tested on the Pi at publication.
 See [release status](docs/release-status.md) and the
-[rc5 physical record](docs/physical-candidate-rc5.md) for the precise boundary.
-
-## [1.0.0rc5] - candidate
-
-- Invalidate the registered-device discovery object on explicit Disconnect so
-  the next ordinary Connect resolves a fresh object, like Force Reconnect.
-- Extend the default bounded BLE connection/GATT resolution deadline from 10
-  to 20 seconds. The configured value remains overridable.
-
-This targets rc4's failed Disconnect then Connect sequence. Subsequent rc5 Pi
-testing confirmed that sequence and automatic recovery; see the rc5 record.
-
-## [1.0.0rc4] - 2026-09-23 prerelease
-
-- Before manual or automatic reconnect of a registered thermometer, ask BlueZ to
-  release a leftover connection for that exact identity after the Bleak client
-  disconnects and before fresh discovery. No unpairing or adapter reset is used.
-
-On the Pi, one force reconnect succeeded and resumed physical communication,
-and explicit disconnect correctly stopped polling and recovery. The following
-ordinary Connect timed out during BLE connection/GATT resolution. Automatic
-recovery remained in stale backoff, so the operator rolled back to the working
-v0.9.0 runtime. See the rc4 physical record. This candidate is not accepted for
-v1.0.0; the four-inserted-probe and four-hour-soak gates remain pending.
-
-## [1.0.0rc3] - 2026-09-23 prerelease
-
-- Report only whitelisted first-party adapter failure details to distinguish BLE
-  connection timeout from individual authentication steps. Native library messages,
-  Bluetooth addresses and credentials remain excluded.
-
-The Pi retest identified repeated BLE connection and GATT service resolution
-timeouts on force reconnect. The operator rolled back to the working v0.9.0
-runtime; see the rc3 physical record. Do not treat a healthy process or automated
-tests as acceptance.
-
-## [1.0.0rc2] - 2026-09-23 prerelease
-
-- Refresh the registered thermometer's BLE discovery before manual and automatic
-  reconnect attempts, avoiding a stale BlueZ candidate after disconnection.
-- Add a safe failure class to operation diagnostics and journal events; exception
-  messages and native Bluetooth identity remain private.
-
-Pi force reconnect still failed, followed by repeated `AdapterError` failures and
-stale communication. The service was rolled back to the physically accepted v0.9.0
-baseline. The failure detail was not available from this candidate.
-
-## [1.0.0rc1] - 2026-09-22 prerelease
-
-- Added guided `pitblu-core-install` and `pitblu-core-config` terminal workflows.
-- Added validated thermometer communication heartbeat to REST, SSE and MQTT, with
-  manual force reconnect through the existing REST operation.
-- Updated dependencies and restored standalone CI and documentation ownership.
-- Changed the pending v1.0.0 physical soak requirement from 16 hours to four hours.
-
-Automated validation passed. Pi testing found healthy physical communication,
-correct absent-probe handling and probe removal within 5.4 seconds, but repeated
-manual reconnects failed during initialisation before automatic recovery restored
-communication. The four-probe and four-hour soak gates were not completed.
+[Pi test record](docs/physical-evidence.md).
 
 ## [0.9.0] - 2026-09-10
 
-- Added the native Raspberry Pi gateway with REST administration, SSE events and
-  optional MQTT telemetry for Weber iGrill V202 thermometers.
-- Added explicit device registration, stable public identifiers, physical and
-  simulated adapters, four logical probe channels and supervised recovery.
-- Added bearer authentication and rotation, request and stream limits, typed
-  versioned configuration, write-only secrets and safe diagnostics.
-- Added hardened systemd deployment, protected backup, upgrade, rollback and
-  non-destructive uninstall workflows.
-- Passed clean-Pi acceptance on Raspberry Pi OS Lite 64-bit Trixie at commit
-  `f3bc11488e72b966676c0f3a1844ea218259ab90`: 114 tests, 93.79% coverage,
-  native installation/security checks, two-probe display comparison, battery,
-  SSE, MQTT, restart/reboot recovery and maintenance workflows.
-
-The accepted runtime was labelled `0.9.0rc1`. Final `0.9.0` preparation changed
-release metadata and documentation only. The original historical release plan
-called for a 16-hour v1.0.0 soak; the candidate entry above records its later
-change to four hours.
+- Added the native Raspberry Pi gateway with REST administration, SSE events
+  and optional MQTT telemetry for Weber iGrill V202 thermometers.
+- Added explicit device registration, physical and simulated adapters, four
+  logical probe channels and automatic recovery.
+- Added bearer authentication and rotation, typed configuration, write-only
+  secrets, a hardened systemd service, protected backups, upgrade, rollback
+  and non-destructive uninstall.
+- Passed the historical clean-Pi checks at commit
+  `f3bc11488e72b966676c0f3a1844ea218259ab90fd`, including two physical
+  probes, SSE, MQTT and reboot recovery. See the
+  [historical record](docs/clean-pi-acceptance.md).

@@ -24,3 +24,13 @@ def test_documentation_local_file_links_exist() -> None:
             if not path:
                 continue
             assert (document.parent / path).exists(), f"{document.name}: {target}"
+
+
+def test_current_documentation_has_no_release_candidate_references() -> None:
+    root = Path(__file__).parents[1]
+    documents = [*root.glob("*.md"), *(root / "docs").rglob("*.md")]
+    pattern = re.compile(
+        r"\b(?:v)?\d+\.\d+\.\d+rc\d+\b|release candidate|physical-candidate-rc", re.I
+    )
+    for document in documents:
+        assert not pattern.search(document.read_text(encoding="utf-8")), document

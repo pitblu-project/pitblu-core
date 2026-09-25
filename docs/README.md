@@ -2,11 +2,10 @@
 
 ## Version and scope
 
-The current release is v1.0.0. The rc5 four-probe display comparison and
-twelve-hour soak passed, but the owner waived the remaining physical gates for
-publication; they are not claimed as passed. See [release status](release-status.md).
-`CHANGELOG.md` is the canonical human-readable version history; Git tags and
-releases are authoritative once published.
+The current release is v1.0.0. Start with [installation](installation.md) or
+the [quick start](bbq-quick-start.md). Some physical checks were waived at
+publication; the [release status](release-status.md) explains the limits.
+Git tags and releases identify published versions.
 
 ## For cooks
 
@@ -15,18 +14,19 @@ releases are authoritative once published.
 
 ## Setup and operation
 
-- [Guided terminal tools](terminal-tools.md): normal install, configuration and support workflow
-- [Installation](installation.md)
+- [Installation](installation.md): the step-by-step path for a new Pi or upgrade
+- [Guided terminal tools](terminal-tools.md): setup and support command reference
 - [Fresh-OS rebuild checklist](rebuild-checklist.md)
 - [Backup, upgrade, rollback and uninstall](upgrade-and-rollback.md)
 - [Troubleshooting](troubleshooting.md)
+- [Controlled migration](rename-migration.md) from an older service identity
 
 ## Frontend builders and contributors
 
 - [Complete frontend/AI handoff](frontend-integration.md): all endpoints, settings,
   SSE/MQTT schemas, examples, workflows and implementation limitations.
 - [pitblu-app repository](https://github.com/pitblu-project/pitblu-app) for Cook-aware APIs
-- [REST](api.md), [configuration](configuration.md), [MQTT](mqtt.md)
+- [REST](api.md), [SSE](sse.md), [MQTT](mqtt.md), [configuration](configuration.md)
 - [Thermometer communication heartbeat](thermometer-heartbeat.md)
 - [Architecture](architecture.md), [Bluetooth protocol](bluetooth.md)
 - [Development](development.md), [contributing](../CONTRIBUTING.md)
@@ -35,13 +35,9 @@ releases are authoritative once published.
 
 - [v1.0.0 release notes](v1.0.0-release-notes.md) and [release status](release-status.md)
 - [Physical acceptance checklist](physical-acceptance.md)
-- [v1.0.0rc1 partial Pi evidence](physical-candidate-rc1.md)
-- [v1.0.0rc2 partial Pi evidence](physical-candidate-rc2.md)
-- [v1.0.0rc3 partial Pi evidence](physical-candidate-rc3.md)
-- [v1.0.0rc4 partial Pi evidence](physical-candidate-rc4.md)
-- [v1.0.0rc5 partial Pi evidence](physical-candidate-rc5.md)
-- [Security policy](../SECURITY.md) and [historical v0.9.0 security review](security-review.md)
-- [Dependency audit](dependency-audit.md) and [clean-Pi procedure](clean-pi-acceptance.md)
+- [Pi and iGrill test evidence](physical-evidence.md)
+- [Security policy](../SECURITY.md) and [historical security review and limits](security-review.md)
+- [Dependency audit](dependency-audit.md) and [historical clean-Pi evidence](clean-pi-acceptance.md)
 - [Changelog](../CHANGELOG.md), v0.9.0 onward
 - [Provenance](provenance.md), [third-party notices](../THIRD_PARTY_NOTICES.md), [licence](../LICENSE)
 - Decisions: [hardware-first](adr/0001-incremental-hardware-first.md),
@@ -52,10 +48,9 @@ releases are authoritative once published.
 
 ## Maintenance policy
 
-Maintain one current installation path and integration contract. Remove superseded
-plans and obsolete command sequences from active documentation; Git history retains
-them. Active documentation targets v1.0.0. Preserve relevant licence/provenance
-and architectural rationale without obsolete milestone instructions.
+Maintain one current installation path and integration contract. Keep historical
+test details only where they explain a current limitation or provide provenance;
+Git history retains superseded plans. Active guides target v1.0.0.
 
 Update affected guides alongside code changes. Verify relative links and examples,
 state the release baseline, and distinguish implemented functionality, limitations

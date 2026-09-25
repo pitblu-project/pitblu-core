@@ -154,5 +154,6 @@ evidence, test no-response and no-probe cases, and never infer success from a ti
 connection flag.
 
 Automated tests cover evidence, ageing, event and transport mappings, session reset,
-simulation, recovery boundaries, CLI operation polling, and sanitisation. Real Pi and
-iGrill validation remains a separate v1.0.0 physical gate.
+simulation, recovery boundaries, CLI operation polling, and sanitisation. The
+[Pi test record](physical-evidence.md) distinguishes observed behaviour from
+physical checks waived at publication.

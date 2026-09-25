@@ -40,6 +40,13 @@ def test_frontend_guide_covers_routes_settings_and_events() -> None:
         for setting in configuration.describe()["settings"]:
             assert f"`{setting}`" in guide
         for event_type in EventType:
-            assert f"`{event_type.value}`" in guide
+            assert f"| `{event_type.value}` |" in guide
+        assert "| `B/v1/devices/{deviceId}/heartbeat` | Yes |" in guide
     finally:
         store.close()
+
+
+def test_sse_guide_lists_every_live_event_type() -> None:
+    guide = (Path(__file__).parents[1] / "docs" / "sse.md").read_text(encoding="utf-8")
+    for event_type in EventType:
+        assert f"| `{event_type.value}` |" in guide

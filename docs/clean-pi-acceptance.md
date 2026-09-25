@@ -1,12 +1,12 @@
 # Clean-Pi acceptance: v0.9.0
 
-Status: **PASS**. Evidence recorded 10 September 2026 for the v0.9.0rc1
-candidate at exact commit `f3bc11488e72b966676c0f3a1844ea218259ab90`.
+Status: **PASS** for the historical v0.9.0 implementation. Evidence recorded
+10 September 2026 at exact commit `f3bc11488e72b966676c0f3a1844ea218259ab90`.
 
-This is the release record for the clean-install gate. Repeatable preparation and
-installation instructions live in the [rebuild checklist](rebuild-checklist.md) and
-[installation guide](installation.md). The full four-probe physical suite and
-minimum twelve-hour soak remain separate v1.0.0 gates.
+This is historical evidence for an earlier published version, not an
+installation guide or proof that v1.0.0 passed the same checks. For current
+instructions, use [installation](installation.md). For current physical
+evidence, use the [Pi test record](physical-evidence.md).
 
 ## Platform and source
 
@@ -63,5 +63,5 @@ the same script and pinned Hatchling version as CI. It was valid JSON of roughly
 bearer tokens or password strings. The generated file is not committed: CI remains
 the normal source of per-Python dependency inventory and audit artefacts.
 
-All v0.9.0 clean-install items are PASS. No v1.0.0 four-probe or soak-test result is
-inferred from this acceptance record.
+All checks listed here passed for the recorded implementation only. Do not
+infer v1.0.0 installation or physical results from this older record.

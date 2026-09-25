@@ -14,7 +14,7 @@ persists cooks, cookers, foods, readings, events, alerts and follower capabiliti
 The concrete `PitbluCoreClient` sits behind a thermometer-gateway boundary. A future
 independent `pitblu-blower-core` can have its own hardware lifecycle, safety system,
 watchdog and real-time control loop, with a separate app adapter. It is not part of
-Milestone 1, and pitblu-core is not a generic hardware layer.
+the current gateway, and pitblu-core is not a generic hardware layer.
 
 ```text
 iGrill --BLE--> pitblu-core --REST/SSE--> pitblu-app --> operator/display/followers
