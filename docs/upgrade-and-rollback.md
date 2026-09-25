@@ -6,8 +6,7 @@ The commands below are for backup, rollback, uninstall and expert recovery. A
 deployment with a different service identity requires
 [controlled migration](rename-migration.md) first.
 
-The v0.9.0 clean-install, upgrade, rollback and reboot-recovery checks passed on the Pi.
-Further upgrade and recovery checks are in the [Pi test record](physical-evidence.md).
+Upgrade and recovery checks are in the [Pi test record](physical-evidence.md).
 The stable v1.0.0 tag has not itself been smoke-tested on the Pi at publication.
 Never upgrade during a cook.
 All operations use a deployment lock and fixed production roots. The home-directory test installation
