@@ -4,8 +4,10 @@ For a complete client-development handoff, see the
 [frontend and AI integration guide](frontend-integration.md), including request and
 response shapes, workflows, browser constraints and current implementation caveats.
 
-The v1.0.0 release provides the administrative control plane and live telemetry stream. OpenAPI and interactive documentation
-are generated at `/openapi.json` and `/docs`. The package default listens only on loopback.
+The v1.0.0 release provides administration and current readings over REST.
+Live events use [SSE](sse.md); optional broker telemetry uses [MQTT](mqtt.md).
+OpenAPI and interactive documentation are generated at `/openapi.json` and
+`/docs`. The package default listens only on `127.0.0.1:8080`.
 
 ## Authentication and errors
 
@@ -23,8 +25,8 @@ values are never included in validation details.
 | Method and path | Result |
 | --- | --- |
 | `GET /health`, `GET /ready` | Minimal liveness and readiness. |
-| `GET /api/v1/status` | Service version, status and UTC time. |
-| `GET /api/v1/diagnostics` | Safe MQTT and device-worker status, failure codes and session ID. |
+| `GET /api/v1/status` | Version, UTC time, process session ID, MQTT, host and device-worker status. |
+| `GET /api/v1/diagnostics` | Same safe status result, including failure codes. |
 | `GET /api/v1/events/operations` | Up to 100 persistent operational/configuration events. |
 | `GET /api/v1/bluetooth` | Adapter availability, connection and physical/simulated source. |
 | `POST /api/v1/scans` | Starts a scan operation and returns HTTP 202. |
@@ -75,11 +77,10 @@ complete semantics and examples.
 `/health` is only liveness. With MQTT enabled, `/ready` returns 503 until the publisher connects.
 Diagnostics contain safe codes rather than exception messages, host settings or credentials.
 
-SSE frames contain `id`, `event` and JSON `data` fields. The data is the same canonical schema used
-by recent history and, where applicable, MQTT: `schemaVersion`, `eventId`, `type`, `observedAt`,
-`sequence`, `source`, `sessionId`, optional `deviceId` and `probe`, and type-specific `data`. Idle streams send
-comment heartbeats at the configured availability-heartbeat interval. Authentication follows the
-same rules as all other `/api/v1/*` resources.
+`GET /api/v1/events/stream` is a live-only SSE stream, not a replay endpoint.
+See the [SSE guide](sse.md) for framing, event types, heartbeat comments,
+reconnection and snapshot reconciliation. MQTT carries a different, flattened
+payload; see the [MQTT guide](mqtt.md) before writing a subscriber.
 
 After the stale threshold, probe and battery resources keep their last observation metadata but
 return `fresh: false`; stale temperatures and battery percentages are returned as `null`.

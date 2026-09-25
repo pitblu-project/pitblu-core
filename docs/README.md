@@ -19,13 +19,14 @@ Git tags and releases identify published versions.
 - [Fresh-OS rebuild checklist](rebuild-checklist.md)
 - [Backup, upgrade, rollback and uninstall](upgrade-and-rollback.md)
 - [Troubleshooting](troubleshooting.md)
+- [Controlled migration](rename-migration.md) from an older service identity
 
 ## Frontend builders and contributors
 
 - [Complete frontend/AI handoff](frontend-integration.md): all endpoints, settings,
   SSE/MQTT schemas, examples, workflows and implementation limitations.
 - [pitblu-app repository](https://github.com/pitblu-project/pitblu-app) for Cook-aware APIs
-- [REST](api.md), [configuration](configuration.md), [MQTT](mqtt.md)
+- [REST](api.md), [SSE](sse.md), [MQTT](mqtt.md), [configuration](configuration.md)
 - [Thermometer communication heartbeat](thermometer-heartbeat.md)
 - [Architecture](architecture.md), [Bluetooth protocol](bluetooth.md)
 - [Development](development.md), [contributing](../CONTRIBUTING.md)
@@ -35,7 +36,7 @@ Git tags and releases identify published versions.
 - [v1.0.0 release notes](v1.0.0-release-notes.md) and [release status](release-status.md)
 - [Physical acceptance checklist](physical-acceptance.md)
 - [Pi and iGrill test evidence](physical-evidence.md)
-- [Security policy](../SECURITY.md) and [security review and limits](security-review.md)
+- [Security policy](../SECURITY.md) and [historical security review and limits](security-review.md)
 - [Dependency audit](dependency-audit.md) and [historical clean-Pi evidence](clean-pi-acceptance.md)
 - [Changelog](../CHANGELOG.md), v0.9.0 onward
 - [Provenance](provenance.md), [third-party notices](../THIRD_PARTY_NOTICES.md), [licence](../LICENSE)

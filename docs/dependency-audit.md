@@ -1,8 +1,11 @@
 # Dependency and licence audit
 
-Reviewed 8 September 2026. Original gateway code remains MIT. No external application
-source was copied or adapted during this audit. Historical protocol sources and
-exact reviewed revisions remain in [provenance](provenance.md).
+This is a dated dependency and licence review from 8 September 2026, not a
+current v1.0.0 version lock. The current pinned direct requirements are in
+[pyproject.toml](../pyproject.toml); CI inventories and audit artifacts show
+the resolved dependencies for each supported Python version. Original gateway
+code remains MIT. No external application source was copied or adapted during
+this audit. Protocol sources are in [provenance](provenance.md).
 
 ## Evidence and reproducibility
 
@@ -34,8 +37,9 @@ in CI after installation. A clean scan does not establish absence of vulnerabili
 
 ## Reviewed packages and obligations
 
-Exact CI versions may differ for transitive dependencies; consult the corresponding
-inventory artifact, not this local snapshot, when reproducing that environment.
+The table below is the **8 September snapshot**. Some direct requirements
+changed before v1.0.0. Consult `pyproject.toml` for current pins and the
+corresponding CI inventory artifact for resolved versions on that platform.
 
 | Group | Locally inspected versions / licence |
 | --- | --- |
@@ -95,5 +99,7 @@ Source releases contain the original project and its notices, not copied externa
 source or bundled site-packages. No known reviewed dependency requires changing the
 original project's MIT licence under this distribution model. The repository is
 public; do not publish secrets or platform-specific resolved snapshots. The actual target Linux
-resolution and clean wheel installation were reviewed for v0.9.0. Future releases
-must repeat that review for their resolved dependencies and build artefacts.
+resolution and clean wheel installation were reviewed for v0.9.0. The v1.0.0
+CI build and dependency checks passed on Python 3.11–3.13; those run artifacts,
+not this old local table, are the current resolved-version evidence. Repeat
+that review for later releases and build artefacts.
