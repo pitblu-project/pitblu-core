@@ -181,3 +181,15 @@ then confirmed all four probes present, fresh and physical, at 19°C, 18°C,
 20°C and 19°C in probe order. This passes targeted Pi-reboot automatic startup
 and physical/MQTT recovery on rc5. It does not exercise the distinct
 connected-but-unresponsive ageing condition.
+
+For a separate temporary Bluetooth-failure check, the operator restarted the
+Pi's `bluetooth` service. Systemd reported BlueZ active again at 2026-09-25
+09:44:22 BST (08:44:22 UTC); the gateway's persisted operation list showed an
+automatic `reconnect` succeeded at 08:44:29 UTC, about seven seconds later.
+After at least one minute, the authenticated support check reported rc5 service
+active and ready, Bluetooth controller powered, MQTT connected, physical iGrill
+polling with communication at zero seconds, four fresh channel responses and
+fresh 30% battery. No manual gateway restart or reconnect was requested. This
+passes targeted recovery from a BlueZ service interruption. It does not prove
+the distinct case where BLE remains connected but recognised GATT exchanges
+stop succeeding long enough for the thermometer heartbeat to age to stale.
